@@ -1,0 +1,242 @@
+/* Applique le padding pour descendre tout le contenu sous la navbar */
+body {
+  font-size: 21px;
+  color: #ffffff;
+  background-image: url(img/photo-1514306191717-452ec28c7814.jpg);
+  background-position: center;
+  background-size: cover;
+  height: 100vh;
+  text-align: center;
+  margin: 0;
+  padding-top: 180px; /* espace sous la navbar */
+  box-sizing: border-box;
+  z-index: 100000;
+}
+
+h1 {
+  text-decoration: underline;
+  padding-top: 80px;
+}
+
+/* NAVBAR */
+header {
+  width: 100%;
+  background-color: #030301c9;
+  color: white;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  box-shadow: 0 4px 20px rgba(38, 11, 56, 0.995);
+}
+
+.navbar {
+  max-width: 1200px;
+  margin: auto;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo a {
+  text-decoration: none;
+  color: rgb(255, 255, 255);
+  font-size: 1.8rem;
+  font-weight: 700;
+  font-family: "Dancing Script", cursive;
+}
+
+.links {
+  display: flex;
+  gap: 3.5rem;
+  list-style: none;
+  font-size: 1.4rem;
+}
+
+.links a {
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s;
+}
+
+.links a:hover {
+  color: #ff0000b5;
+}
+
+.buttons {
+  display: flex;
+  gap: 1rem;
+}
+
+.action-button {
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  background-color: #ffffff10;
+  color: white;
+  text-decoration: none;
+  border: 1px solid #ffffff30;
+  transition: all 0.3s ease;
+}
+
+.action-button:hover {
+  background-color: #ffffff39;
+}
+
+.burgermenubutton {
+  display: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.burger-menu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: #070917;
+  width: 100%;
+  padding: 2rem 1.5rem;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+  transition: max-height 0.3s ease;
+}
+
+.burger-menu ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.burger-menu a {
+  color: white;
+  text-decoration: none;
+}
+
+.burger-menu .divider {
+  height: 1px;
+  background: #ffffff20;
+  margin: 1rem 0;
+}
+
+.buttons-burger-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.show {
+  display: block;
+}
+
+/* RESPONSIVE NAVBAR */
+@media (max-width: 768px) {
+  .links,
+  .buttons {
+    display: none;
+  }
+
+  .burgermenubutton {
+    display: block;
+  }
+}
+
+
+/* -------------------------
+   Boutons de jour (nouveau système clair)
+   ------------------------- */
+.choix-jour {
+  text-align: center;
+  margin-top: 6px;
+  position: static; /* par défaut (mobile, tablette) */
+}
+
+.choix-jour h2 {
+  font-size: 1.6rem;
+  margin-bottom: 12px;
+}
+
+.jours-container {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.jour-btn {
+  background: #444;
+  color: #fff;
+  padding: 14px 22px;
+  border-radius: 10px;
+  border: none;
+  font-weight: 700;
+  font-size: 1.1rem;
+  min-width: 140px;
+  cursor: pointer;
+}
+.jour-btn:hover {
+  background: #666;
+}
+
+:root {
+  --seat-size: 120px;
+  --seat-gap: 5px;
+  --seat-radius: 5px;
+  --seat-free: #30af34;
+  --seat-reserved: #ff0000;
+}
+
+/* responsive */
+@media (max-width: 900px) {
+  :root { --seat-size: 60px; }
+}
+@media (max-width: 600px) {
+  :root { --seat-size: 40px; }
+}
+@media (max-width: 400px) {
+  :root { --seat-size: 32px; }
+}
+
+.admin-container {
+  width:100%;
+  max-width:1200px;
+  margin:0 auto;
+  padding:18px;
+  box-sizing:border-box;
+  display:flex;
+  flex-direction:column;
+  gap:30px;
+  align-items:center;
+}
+
+/* grille seats */
+.seats {
+  display:grid;
+  grid-template-columns: repeat(10, var(--seat-size));
+  grid-auto-rows: var(--seat-size);
+  gap: var(--seat-gap);
+  justify-content:center;
+  align-items:center;
+  margin: 6px auto 20px;
+  max-width: calc((var(--seat-size) * 10) + (var(--seat-gap) * 9));
+}
+
+.seat {
+  width: var(--seat-size);
+  height: var(--seat-size);
+  border-radius: var(--seat-radius);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  color: #fff;
+  user-select: none;
+  -webkit-user-select: none;
+  box-shadow: 0 1px 0 rgba(0,0,0,0.25) inset;
+  font-size: 22px;   /* ✅ fixe la taille des chiffres */
+}
+
+
+.seat.free { background: var(--seat-free); }
+.seat.reserved { background: var(--seat-reserved); }

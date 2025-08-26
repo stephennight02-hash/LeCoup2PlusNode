@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="be">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LeCoup2Plus</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="icon" type="icon" href="img/img/logo.png" sizes="96x96" />
+  <meta property="og:type" content="website" />
+  <meta content="summary_large_image" name="twitter:card" />
+    <title>Informations</title>
+    <link rel="stylesheet" href="info.css">
+    <link rel="icon" type="icon" href="img/img/logo.png" sizes="96x96" />
+
+</head>
+
+<header>
+  <div class="navbar">
+    <div class="logo">
+      <a href="#">LeCoup2Plus</a>
+    </div>
+    <ul class="links">
+      <li><a href="index.html">Accueil</a></li>
+      <li><a href="info.html">Informations</a></li>
+      <li><a href="galerie.html">Galerie</a></li>
+      <li><a href="boutiqueven.html">Réservation</a></li>
+    </ul>
+    <div class="buttons">
+      <div id="user-info" style="display: none; align-items: center; gap: 10px; margin-left: 20px;">
+        <img id="user-photo" src="" alt="Photo de profil" style="width: 40px; height: 40px; border-radius: 50%;">
+        <span id="user-name" style="color: white; font-weight: bold;"></span>
+      </div>
+    </div>
+
+    <!-- ✅ Nouveau bouton menu personnalisé -->
+    <div class="burgermenubutton" style="cursor: pointer;">
+      <img src="img/menu.png" alt="Menu" style="width: 30px; height: 30px;">
+    </div>
+  </div>
+
+  <div class="burger-menu">
+    <ul class="links">
+      <li><a href="index.html">Accueil</a></li>
+      <li><a href="info.html">Informations</a></li>
+      <li><a href="galerie.html">Galerie</a></li>
+      <li><a href="boutiqueven.html">Réservation</a></li>
+      <div class="divider"></div>
+      <div class="buttons-burger-menu"></div>
+    </ul>
+  </div>
+
+  <script>
+    const burgerBtn = document.querySelector(".burgermenubutton");
+    const burgerMenu = document.querySelector(".burger-menu");
+
+    burgerBtn.addEventListener("click", () => {
+      burgerMenu.classList.toggle("show");
+    });
+  </script>
+</header>
+
+
+<body>
+
+<div class="container">
+  <div style="--clr:#f5750c;" class="box">
+    <div class="content">
+      <div class="icon"></div>
+      <div class="text">
+        <h3>Présentation</h3>
+        <p>
+          LeCoup2Plus est une troupe théatrale fondée par Mauro Stefano et Guy Byloos.
+        </p>
+      </div>
+    </div>
+  </div>
+  <div style="--clr:#eb5ae5;" class="box">
+    <div class="content">
+      <div class="icon"></div>
+      <div class="text">
+        <h3>Spectacles</h3>
+        <p>
+          Nous avons déja joués, J'aime beaucoup ce que vous faites, Toc Toc, Funny Money et Sexe et Jalousie.
+        </p>
+      </div>
+    </div>
+  </div>
+  <div style="--clr:#5b98eb;" class="box">
+    <div class="content">
+      <div class="icon"></div>
+      <div class="text">
+        <h3>Infos Pratiques</h3>
+        <p>
+          <a href="https://api.whatsapp.com/send?phone=%2B32476777961&app=facebook&entry_point=page_cta&fbclid=IwY2xjawLqK4hleHRuA2FlbQIxMABicmlkETB5d0pzbDhEM2dqZlVvdEdRAR6E4bfRi5peVyu5NxOHD-XQhe3-0sXqRYpfLxOiccpH5G_8Ukx-o9sLCPLD0Q_aem_7-42GQ9HlMOqUE5yCtDg7w">Whatsapp</a>
+          <a href="">lecoup2plus@outlook.fr</a>
+          <a href="https://www.facebook.com/profile.php?id=100066436214728&sk=reviews&locale=fr_FR">Facebook </a>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+</body>
+</html>

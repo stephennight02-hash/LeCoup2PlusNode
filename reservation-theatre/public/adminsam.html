@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="admin.css">
+<title>Admin 80 places</title>
+
+<header>
+  <div class="navbar">
+    <div class="logo">
+      <a href="#">LeCoup2Plus</a>
+    </div>
+    <ul class="links">
+      <li><a href="index.html">Accueil</a></li>
+      <li><a href="info.html">Informations</a></li>
+      <li><a href="galerie.html">Galerie</a></li>
+      <li><a href="boutiqueven.html">Réservation</a></li>
+    </ul>
+    <div class="buttons">
+      <div id="user-info" style="display: none; align-items: center; gap: 10px; margin-left: 20px;">
+        <img id="user-photo" src="" alt="Photo de profil" style="width: 40px; height: 40px; border-radius: 50%;">
+        <span id="user-name" style="color: white; font-weight: bold;"></span>
+      </div>
+    </div>
+
+    <!-- ✅ Nouveau bouton menu personnalisé -->
+    <div class="burgermenubutton" style="cursor: pointer;">
+      <img src="img/menu.png" alt="Menu" style="width: 30px; height: 30px;">
+    </div>
+  </div>
+
+  <div class="burger-menu">
+    <ul class="links">
+      <li><a href="index.html">Accueil</a></li>
+      <li><a href="info.html">Informations</a></li>
+      <li><a href="galerie.html">Galerie</a></li>
+      <li><a href="boutiqueven.html">Réservation</a></li>
+      <div class="divider"></div>
+      <div class="buttons-burger-menu"></div>
+    </ul>
+  </div>
+
+  <script>
+    const burgerBtn = document.querySelector(".burgermenubutton");
+    const burgerMenu = document.querySelector(".burger-menu");
+
+    burgerBtn.addEventListener("click", () => {
+      burgerMenu.classList.toggle("show");
+    });
+  </script>
+</header>
+
+
+
+<style> 
+  body {font-family:sans-serif;padding:20px;}
+  #seats { display:grid; grid-template-columns:repeat(10,40px); gap:10px; justify-content:center; }
+  .seat { width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;color:white;font-weight:bold; }
+  .free { background:green; }
+  .reserved { background:red; }
+  .seat:hover { opacity:0.8; }
+</style>
+</head>
+<body>
+  <h1>🎭 Admin 80 places (Samedi)</h1>
+  <div id="seats"></div>
+  <br>
+  <button onclick="saveSeats()">💾 Enregistrer</button>
+
+
+<script>
+function goToPage() {
+  const day = document.getElementById('day').value;
+  if (!day) {
+    alert('Veuillez choisir un jour.');
+    return;
+  }
+
+  // Choisis le mode : admin ou boutique
+  const mode = 'admin'; // change en 'boutique' pour l'autre version
+
+  const url = mode === 'admin'
+    ? `admin${day}.html`
+    : `boutique${day}.html`;
+
+  window.location.href = url;
+}
+</script>
+
+
+  <script>
+    let seats = [];
+
+    function getLabel(i) {
+      return String.fromCharCode(65 + Math.floor(i / 10)) + ((i % 10) + 1);
+    }
+
+    async function fetchSeats() {
+      const res = await fetch('/api/seats-sam');
+      seats = await res.json();
+      render();
+    }
+
+    function render() {
+      const c = document.getElementById('seats');
+      c.innerHTML = '';
+      for (let i = 0; i < 80; i++) {
+        const div = document.createElement('div');
+        div.textContent = getLabel(i);
+        div.className = 'seat ' + (seats[i].reserved ? 'reserved' : 'free');
+        div.onclick = () => {
+          seats[i].reserved = !seats[i].reserved;
+          render();
+        };
+        c.appendChild(div);
+      }
+    }
+
+    async function saveSeats() {
+      const res = await fetch('/api/save-seats-sam', {
+        method: 'POST',
+        headers: {'Content-Type':'application/json'},
+        body: JSON.stringify(seats)
+      });
+      const r = await res.json();
+      alert(r.message || 'Sauvegardé!');
+    }
+
+    fetchSeats();
+  </script>
+
+
+<section class="choix-jour">
+  <h2>Choisissez un jour</h2>
+  <div class="jours-container">
+    <button class="jour-btn" data-day="sam"><a href="adminven.html">Vendredi</a></button>
+    <button class="jour-btn" data-day="dim"><a href="admindim.html">Dimanche</a></button>
+  </div>
+</section>
+
+
+</body>
+</html>

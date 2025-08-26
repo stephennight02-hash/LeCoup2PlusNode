@@ -1,0 +1,480 @@
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Poetsen+One&family=Poppins:wght@400;600;700&display=swap');
+
+/* GLOBAL RESETS */
+html {
+  box-sizing: border-box;
+}
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+  margin: 0;
+  padding: 0;
+  font-family: 'Poppins', sans-serif;
+}
+
+body {
+  font-size: 21px;
+  color: #ffffff;
+  background-image: url(img/photo-1514306191717-452ec28c7814.jpg);
+  background-position: center;
+  background-size: cover;
+  height: 100vh;
+  padding-top: 90px;
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+    body {
+      margin-top: 50px;
+    }
+}
+
+/* NAVBAR */
+header {
+  width: 100%;
+  background-color: #030301c9;
+  color: white;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  box-shadow: 0 4px 20px rgba(38, 11, 56, 0.995);
+}
+
+.navbar {
+  max-width: 1200px;
+  margin: auto;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo a {
+  text-decoration: none;
+  color: rgb(255, 255, 255);
+  font-size: 1.8rem;
+  font-weight: 700;
+  font-family: "Dancing Script", cursive;
+}
+
+.links {
+  display: flex;
+  gap: 3.5rem;
+  list-style: none;
+  font-size: 1.4rem;
+}
+
+.links a {
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s;
+}
+
+.links a:hover {
+  color: #ff0000b5;
+}
+
+.buttons {
+  display: flex;
+  gap: 1rem;
+}
+
+.action-button {
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  background-color: #ffffff10;
+  color: white;
+  text-decoration: none;
+  border: 1px solid #ffffff30;
+  transition: all 0.3s ease;
+}
+
+.action-button:hover {
+  background-color: #ffffff39;
+}
+
+.burgermenubutton {
+  display: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.burger-menu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: #070917;
+  width: 100%;
+  padding: 2rem 1.5rem;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+  transition: max-height 0.3s ease;
+}
+
+.burger-menu ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.burger-menu a {
+  color: white;
+  text-decoration: none;
+}
+
+.burger-menu .divider {
+  height: 1px;
+  background: #ffffff20;
+  margin: 1rem 0;
+}
+
+.buttons-burger-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.show {
+  display: block;
+}
+
+/* RESPONSIVE NAVBAR */
+@media (max-width: 768px) {
+  .links,
+  .buttons {
+    display: none;
+  }
+
+  .burgermenubutton {
+    display: block;
+  }
+}
+
+/* --- Styles généraux et de flexcontact (inchangés) --- */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #1a1a1a;
+    color: #eee;
+}
+
+.flexcontact {
+    height: 10rem;
+    width: 25rem;
+    border: solid rgb(82, 15, 192) 10px;
+    position: relative;
+    display: flex;
+    justify-content: left;
+    align-items: start;
+    border-radius: 13px;
+    background-color: #030301c9;
+    font-size: 1rem;
+}
+
+.contact {
+  text-align: center;
+  color: white;
+  padding: 1rem;
+}
+
+.contact strong {
+  color: rgb(200, 200, 255);
+}
+
+.lienici {
+  color: red;
+}
+
+/* --- Section Cards : Mobile-First (par défaut) --- */
+.cards-container-wrapper {
+    margin-top: 3rem;
+    padding: 0 1rem; /* Conserve le padding pour l'espace intérieur */
+    max-width: 1200px; /* Assure une largeur maximale */
+    margin-left: auto; /* Centre le conteneur wrapper */
+    margin-right: auto;
+}
+
+.cards-container {
+    display: grid;
+    grid-template-columns: 1fr; /* Une seule colonne par défaut pour mobile */
+    gap: 1.5rem;
+    justify-items: center;
+    padding: 1rem 0;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.card {
+    width: 90vw;
+    /* MODIFIÉ: max-width légèrement réduit pour les très petits écrans */
+    max-width: 350px;
+    /* MODIFIÉ: height réduite pour les très petits écrans */
+    height: 480px; /* Entre 200px et 350px de hauteur pour la carte complète est un peu petit,
+                      j'ai choisi 480px pour que le contenu reste lisible.
+                      Si tu veux vraiment 200-350px, cela pourrait tronquer le texte
+                      ou rendre l'image trop petite. */
+
+    background-color: #f2f2f243;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    perspective: 1000px;
+    box-shadow: 0 0 0 5px #ffffff80;
+    transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    position: relative;
+    color: #eee;
+}
+
+.card img {
+    width: 100%;
+    height: 100%; /* L'image remplit la carte */
+    object-fit: cover;
+    transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 16px rgba(255, 255, 255, 0.2);
+}
+
+.card__content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+    background-color: #333333fc;
+    transform: rotateX(-90deg);
+    transform-origin: bottom;
+    transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.card:hover .card__content {
+    transform: rotateX(0deg);
+}
+
+.card__title {
+    margin: 0;
+    font-size: 28px; /* Taille de titre légèrement augmentée pour les grandes cartes */
+    font-weight: 700;
+}
+
+.card__description {
+    margin: 15px 0 0; /* Marge légèrement augmentée */
+    font-size: 16px; /* Taille de description légèrement augmentée */
+    color: #b9b8b8;
+    line-height: 1.5; /* Interligne ajustée */
+}
+
+.card:hover svg {
+    transform: scale(0);
+}
+
+/* --- Media Query pour les écrans plus larges (tablettes et desktops) --- */
+@media (max-width: 768px) {
+    .cards-container {
+        grid-template-columns: repeat(2, 1fr); /* 2 colonnes */
+        gap: 2rem;
+    }
+
+    .card {
+        width: 100%; /* Laisse la grille gérer la largeur */
+        max-width: 250px; /* Taille maximale de la carte sur écrans moyens */
+        height: 280px; /* Hauteur fixe plus grande pour la carte sur écrans moyens */
+    }
+}
+
+/* Optionnel : pour les très grands écrans (ex: desktops) */
+@media (min-width: 1024px) {
+    .cards-container {
+        grid-template-columns: repeat(3, 1fr); /* 3 colonnes */
+    }
+
+    .card {
+        max-width: 400px; /* Légèrement plus petites pour en mettre 3 côte à côte */
+        height: 550px; /* Hauteur ajustée pour 3 colonnes */
+    }
+}
+
+.section-title {
+    text-align: center;
+    color: #f0f0f0;
+    font-size: 2.5rem;
+    margin-top: 4rem;
+    margin-bottom: 2rem;
+    padding: 0 1rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    /* NOUVEAU: Mettre en gras les titres de section */
+    font-weight: bold;
+}
+
+/* --- Styles pour le séparateur visuel --- */
+.section-divider {
+    border: none;
+    /* MODIFIÉ: Couleur mauve pour la bordure */
+    border-top: 3px solid rgb(128, 0, 128); /* Un mauve plus prononcé */
+    width: 60%;
+    max-width: 800px;
+    margin: 4rem auto;
+    /* MODIFIÉ: Lueur mauve pour le style */
+    box-shadow: 0 0 10px rgba(128, 0, 128, 0.8);
+    border-radius: 5px;
+}
+
+.plan {
+  border-radius: 16px;
+  box-shadow: 0 30px 30px -25px rgba(0, 38, 255, 0.205);
+  padding: 10px;
+  background-color: #fff;
+  color: #697e91;
+  max-width: 300px;
+  margin-top: 5rem;
+  margin-left: 45rem;
+}
+
+.plan strong {
+  font-weight: 600;
+  color: #425275;
+}
+
+.plan .inner {
+  align-items: center;
+  padding: 20px;
+  padding-top: 40px;
+  background-color: #ecf0ff;
+  border-radius: 12px;
+  position: relative;
+}
+
+.plan .pricing {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: #bed6fb;
+  border-radius: 99em 0 0 99em;
+  display: flex;
+  align-items: center;
+  padding: 0.625em 0.75em;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #425475;
+}
+
+.plan .pricing small {
+  color: #707a91;
+  font-size: 0.75em;
+  margin-left: 0.25em;
+}
+
+.plan .title {
+  font-weight: 600;
+  font-size: 1.25rem;
+  color: #425675;
+}
+
+.plan .title + * {
+  margin-top: 0.75rem;
+}
+
+.plan .info + * {
+  margin-top: 1rem;
+}
+
+.plan .features {
+  display: flex;
+  flex-direction: column;
+}
+
+.plan .features li {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.plan .features li + * {
+  margin-top: 0.75rem;
+}
+
+.plan .features .icon {
+  background-color: #1FCAC5;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+}
+
+.plan .features .icon svg {
+  width: 14px;
+  height: 14px;
+}
+
+.plan .features + * {
+  margin-top: 1.25rem;
+}
+
+.plan .action {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: end;
+}
+
+.plan .button {
+  background-color: #6558d3;
+  border-radius: 6px;
+  color: #fff;
+  font-weight: 500;
+  font-size: 1.125rem;
+  text-align: center;
+  border: 0;
+  outline: 0;
+  width: 100%;
+  padding: 0.625em 0.75em;
+  text-decoration: none;
+}
+
+.plan .button:hover, .plan .button:focus {
+  background-color: #4133B7;
+}
+
+.admin-button {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;     /* Changement ici : de 'right' à 'left' */
+    z-index: 1000;
+    display: block;
+    cursor: pointer;
+    transition: transform 0.3s ease-in-out;
+    height: 30px;
+    width: 30px;
+}
+
+.admin-button:hover {
+    transform: scale(1.1);
+}
+
+.admin-icon {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    object-fit: cover;
+    display: block;
+}

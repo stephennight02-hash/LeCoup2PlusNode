@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Place Disponible - Vendredi</title>
+<link rel="stylesheet" href="boutique.css">
+<!-- Font Awesome pour l'icône -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<header>
+  <div class="navbar">
+    <div class="logo">
+      <a href="#">LeCoup2Plus</a>
+    </div>
+    <ul class="links">
+      <li><a href="index.html">Accueil</a></li>
+      <li><a href="info.html">Informations</a></li>
+      <li><a href="galerie.html">Galerie</a></li>
+      <li><a href="boutiqueven.html">Réservation</a></li>
+    </ul>
+    <div class="buttons">
+      <div id="user-info" style="display: none; align-items: center; gap: 10px; margin-left: 20px;">
+        <img id="user-photo" src="" alt="Photo de profil" style="width: 40px; height: 40px; border-radius: 50%;">
+        <span id="user-name" style="color: white; font-weight: bold;"></span>
+      </div>
+    </div>
+
+    <!-- ✅ Nouveau bouton menu personnalisé -->
+    <div class="burgermenubutton" style="cursor: pointer;">
+      <img src="img/menu.png" alt="Menu" style="width: 30px; height: 30px;">
+    </div>
+  </div>
+
+  <div class="burger-menu">
+    <ul class="links">
+      <li><a href="index.html">Accueil</a></li>
+      <li><a href="info.html">Informations</a></li>
+      <li><a href="galerie.html">Galerie</a></li>
+      <li><a href="boutiqueven.html">Réservation</a></li>
+      <div class="divider"></div>
+      <div class="buttons-burger-menu"></div>
+    </ul>
+  </div>
+
+  <script>
+    const burgerBtn = document.querySelector(".burgermenubutton");
+    const burgerMenu = document.querySelector(".burger-menu");
+
+    burgerBtn.addEventListener("click", () => {
+      burgerMenu.classList.toggle("show");
+    });
+  </script>
+</header>
+
+
+<body>
+
+
+
+<main class="content">
+  <!-- Section réservation -->
+  <section class="reservation">
+    <div class="scene">🎭 Samedi 25/09</div>
+    <div class="seats" id="seats-container"></div>
+    <div class="legend">
+      <p><span><span class="circle" style="background:#30af34;"></span> Disponibles</span>
+         <span><span class="circle" style="background:#575757;"></span> Réservées</span></p>
+    </div>
+    <div class="reservation-info">
+      <p>Pour réserver, effectuez un virement de <strong>10€</strong> en indiquant le <strong>nombre de places</strong> et <strong>votre nom</strong> en communication.</p>
+      <p>💳 N° de compte : <strong>BE71 1262 0995 6469</strong></p>
+    </div>
+  </section>
+
+<section class="choix-jour">
+  <h2>Choisissez un jour</h2>
+  <div class="jours-container">
+    <button class="jour-btn" data-day="sam"><a href="boutiqueven.html">Vendredi</a></button>
+    <button class="jour-btn" data-day="dim"><a href="boutiquedim.html">Dimanche</a></button>
+  </div>
+</section>
+
+
+<script>
+// Charger les places disponibles
+fetch('/api/seats-ven')
+  .then(r => r.json())
+  .then(data => {
+    const c = document.getElementById('seats-container');
+    c.innerHTML = '';
+
+    // Forcer à 80 places (8 rangées de 10)
+    for (let i = 0; i < 80; i++) {
+      const seatData = data[i] || { reserved: false }; // si pas de data, place libre
+      const d = document.createElement('div');
+      d.className = 'seat ' + (seatData.reserved ? 'reserved' : 'free');
+      d.textContent = i + 1;
+      c.appendChild(d);
+    }
+  });
+</script>
+
+</body>
+</html>
