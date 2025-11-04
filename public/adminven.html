@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin 80 places - Vendredi</title>
+<link rel="stylesheet" href="admin.css">
+</head>
+
+<header>
+  <div class="navbar">
+    <div class="logo">
+      <a href="#">LeCoup2Plus</a>
+    </div>
+    <ul class="links">
+      <li><a href="index.html">Accueil</a></li>
+      <li><a href="info.html">Informations</a></li>
+      <li><a href="galerie.html">Galerie</a></li>
+      <li><a href="boutiqueven.html">Réservation</a></li>
+    </ul>
+
+    <div class="burgermenubutton" style="cursor: pointer;">
+      <img src="img/menu.png" alt="Menu" style="width: 30px; height: 30px;">
+    </div>
+  </div>
+
+  <div class="burger-menu">
+    <ul class="links">
+      <li><a href="index.html">Accueil</a></li>
+      <li><a href="info.html">Informations</a></li>
+      <li><a href="galerie.html">Galerie</a></li>
+      <li><a href="boutique.html">Réservation</a></li>
+    </ul>
+  </div>
+
+  <script>
+    const burgerBtn = document.querySelector(".burgermenubutton");
+    const burgerMenu = document.querySelector(".burger-menu");
+    burgerBtn.addEventListener("click", () => burgerMenu.classList.toggle("show"));
+  </script>
+</header>
+
+<body>
+<main class="content">
+  <section class="reservation">
+    <h1>🎭 Admin - Vendredi</h1>
+
+    <div class="scene">Plan des 80 places</div>
+
+    <div class="seats" id="seats-container"></div>
+
+    <div class="legend">
+      <p>
+        <span><span class="circle" style="background:#30af34;"></span> Disponibles</span>
+        <span style="margin-left:12px;"><span class="circle" style="background:#575757;"></span> Réservées</span>
+      </p>
+    </div>
+
+    <button class="save-btn" onclick="saveSeats()">💾 Enregistrer</button>
+  </section>
+
+  <section class="choix-jour">
+    <h2>Choisissez un jour</h2>
+    <div class="jours-container">
+      <button class="jour-btn" data-day="sam"><a href="adminsam.html">Samedi</a></button>
+      <button class="jour-btn" data-day="dim"><a href="admindim.html">Dimanche</a></button>
+    </div>
+  </section>
+</main>
+
+<script>
+  let seats = [];
+
+  // Charger les places depuis l’API
+  async function fetchSeats() {
+    try {
+      const res = await fetch('/api/seats-ven');
+      const data = await res.json();
+      seats = data.length ? data : Array(80).fill({ reserved: false });
+      renderSeats();
+    } catch (e) {
+      console.error("Erreur de chargement :", e);
+    }
+  }
+
+  // Affichage des places
+  function renderSeats() {
+    const c = document.getElementById('seats-container');
+    c.innerHTML = '';
+
+    for (let i = 0; i < 80; i++) {
+      const seatData = seats[i] || { reserved: false };
+      const d = document.createElement('div');
+      d.className = 'seat ' + (seatData.reserved ? 'reserved' : 'free');
+      d.textContent = i + 1;
+
+      // Rendre les places cliquables
+      d.addEventListener('click', () => {
+        seats[i].reserved = !seats[i].reserved;
+        d.className = 'seat ' + (seats[i].reserved ? 'reserved' : 'free');
+      });
+
+      c.appendChild(d);
+    }
+  }
+
+  // Sauvegarder l’état des places
+  async function saveSeats() {
+    try {
+      const res = await fetch('/api/save-seats-ven', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(seats)
+      });
+      const result = await res.json();
+      alert(result.message || "Sauvegardé !");
+    } catch (err) {
+      console.error(err);
+      alert("Erreur lors de la sauvegarde");
+    }
+  }
+
+  fetchSeats();
+</script>
+
+<style>
+  /* --- même affichage que la boutique --- */
+  .content {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 18px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    align-items: center;
+  }
+
+  .scene {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+  }
+
+  .seats {
+    display: grid;
+    grid-template-columns: repeat(10, var(--seat-size, 45px));
+    grid-auto-rows: var(--seat-size, 45px);
+    gap: var(--seat-gap, 10px);
+    justify-content: center;
+    align-items: center;
+    margin: 6px auto 20px;
+    max-width: calc((var(--seat-size, 45px) * 10) + (var(--seat-gap, 10px) * 9));
+  }
+
+  .seat {
+    width: var(--seat-size, 45px);
+    height: var(--seat-size, 45px);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    color: #fff;
+    cursor: pointer;
+    user-select: none;
+  }
+
+  .seat.free {
+    background: #30af34;
+  }
+
+  .seat.reserved {
+    background: #575757;
+  }
+
+  .save-btn {
+    background: #444;
+    color: #fff;
+    padding: 12px 20px;
+    border-radius: 10px;
+    border: none;
+    font-size: 1.1rem;
+    cursor: pointer;
+  }
+
+  .save-btn:hover {
+    background: #666;
+  }
+
+  .legend {
+    margin-bottom: 10px;
+    text-align: center;
+  }
+
+  .legend .circle {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    margin-right: 8px;
+    vertical-align: middle;
+  }
+
+  /* Responsive : agrandir les cases sur mobile */
+  @media (max-width: 768px) {
+    :root {
+      --seat-size: 70px;
+      --seat-gap: 14px;
+    }
+
+    .scene {
+      font-size: 1.6rem;
+    }
+  }
+</style>
+</body>
+</html>

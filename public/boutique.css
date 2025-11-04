@@ -1,0 +1,308 @@
+/* =========================
+   boutique.css (complet)
+   - contient navbar + layout des 80 places
+   - garde 10 colonnes fixes (8 rangées de 10)
+   - responsive : réduit la taille des pastilles sur mobile
+   ========================= */
+
+/* variables pour contrôle facile */
+:root{
+  --header-bg: #030301c9;
+  --seat-size: 40px;    /* taille desktop */
+  --seat-gap: 8px;
+  --seat-radius: 6px;
+  --seat-free: #30af34;
+  --seat-reserved: #575757;
+}
+
+/* -------------------------
+   Reset / base
+   ------------------------- */
+/* GLOBAL RESETS */
+html {
+  box-sizing: border-box;
+}
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+  margin: 0;
+  padding: 0;
+  font-family: 'Poppins', sans-serif;
+}
+
+body {
+  font-size: 21px;
+  color: #ffffff;
+  background-image: url(img/photo-1514306191717-452ec28c7814.jpg);
+  background-position: center;
+  background-size: cover;
+  height: 100vh;
+  padding-top: 60px;
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+    body {
+      margin-top: 50px;
+    }
+}
+
+/* -------------------------
+   NAVBAR (repris / conservé)
+   ------------------------- */
+header{
+  width:100%;
+  background-color:var(--header-bg);
+  color:white;
+  position:fixed;
+  top:0;
+  left:0;
+  z-index:1000;
+  box-shadow:0 4px 20px rgba(38,11,56,0.995);
+}
+
+.navbar{
+  max-width:1200px;
+  margin:auto;
+  padding:0.75rem 1.5rem; /* un peu plus compact que précédemment */
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.logo a{
+  text-decoration:none;
+  color:#fff;
+  font-size:1.6rem;
+  font-weight:700;
+  font-family:"Dancing Script", cursive;
+}
+
+.links{
+  display:flex;
+  gap:2.5rem;
+  list-style:none;
+  font-size:1.2rem;
+  align-items:center;
+}
+
+.links a{
+  color:white;
+  text-decoration:none;
+  font-weight:500;
+  transition:color 0.25s;
+}
+
+.links a:hover{ color:#ff0000b5; }
+
+.buttons{ display:flex; gap:1rem; }
+
+.action-button{
+  padding:0.45rem 0.9rem;
+  border-radius:5px;
+  background:#ffffff10;
+  color:white;
+  border:1px solid #ffffff30;
+  text-decoration:none;
+}
+
+.burgermenubutton {
+  display: none; /* affiché seulement en responsive */
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.burgermenubutton .burger-icon {
+  width: 50px;   /* taille ajustée */
+  height: 50px;
+  object-fit: contain;
+}
+
+
+
+/* menu burger mobile */
+.burger-menu{
+  display:none;
+  position:absolute;
+  top:100%;
+  left:0;
+  width:100%;
+  background:#070917;
+  padding:1.5rem;
+  box-shadow:0 8px 30px rgba(0,0,0,0.4);
+}
+
+.burger-menu ul{ list-style:none; display:flex; flex-direction:column; gap:1rem; padding:0; margin:0; }
+.burger-menu a{ color:#fff; text-decoration:none; font-size:1.1rem; }
+.burger-menu .divider{ height:1px; background:#ffffff20; margin:1rem 0; }
+
+.show{ display:block !important; }
+
+@media (max-width: 768px) {
+  .burgermenubutton {
+    display: block; /* visible seulement en mobile */
+  }
+  .links {
+    display: none; /* les liens normaux disparaissent sur mobile */
+  }
+}
+
+
+a {
+  color: inherit;        /* garde la couleur du texte parent */
+  text-decoration: none; /* enlève le soulignage */
+}
+a:visited {
+  color: inherit;        /* évite le mauve */
+}
+a:hover {
+  color: inherit;        /* pas de changement au survol */
+}
+
+/* -------------------------
+   Conteneur principal
+   ------------------------- */
+.content{
+  width:100%;
+  max-width:1200px;
+  margin:0 auto;
+  padding:18px;
+  box-sizing:border-box;
+  display:flex;
+  flex-direction:column;
+  gap:30px;
+  align-items:center;
+}
+
+/* -------------------------
+   Section réservation
+   ------------------------- */
+.scene{
+  font-size:1.9rem;
+  font-weight:700;
+  margin-top:6px;
+}
+
+/* GRILLE : forcer 10 colonnes (8 rangées de 10 = 80 éléments)
+   On fixe la colonne à la variable --seat-size, réduite par media queries */
+.seats{
+  display:grid;
+  grid-template-columns: repeat(10, var(--seat-size));
+  grid-auto-rows: var(--seat-size);
+  gap: var(--seat-gap);
+  justify-content:center;
+  align-items:center;
+  margin: 6px auto 20px;
+  /* largeur max évite débordement */
+  max-width: calc( (var(--seat-size) * 10) + (var(--seat-gap) * 9) );
+}
+
+/* case */
+.seat{
+  width: var(--seat-size);
+  height: var(--seat-size);
+  border-radius: var(--seat-radius);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:700;
+  color:#fff;
+  user-select:none;
+  -webkit-user-select:none;
+  box-shadow: 0 1px 0 rgba(0,0,0,0.25) inset;
+  font-size: calc(var(--seat-size) * 0.35);
+}
+
+/* états */
+.seat.free{ background: var(--seat-free); }
+.seat.reserved{ background: var(--seat-reserved); }
+
+/* Légende */
+.legend{ margin-bottom:10px; }
+.legend .circle{ display:inline-block; width:14px; height:14px; border-radius:50%; margin-right:8px; vertical-align:middle; }
+
+/* Info réservation (cadre lisible) */
+.reservation-info{
+  background: rgba(0,0,0,0.55);
+  padding:12px 16px;
+  border-radius:10px;
+  max-width:560px;
+  line-height:1.4;
+}
+
+/* -------------------------
+   Boutons de jour (nouveau système clair)
+   ------------------------- */
+.choix-jour {
+  text-align: center;
+  margin-top: 6px;
+  position: static; /* par défaut (mobile, tablette) */
+}
+
+.choix-jour h2 {
+  font-size: 1.6rem;
+  margin-bottom: 12px;
+}
+
+.jours-container {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.jour-btn {
+  background: #444;
+  color: #fff;
+  padding: 14px 22px;
+  border-radius: 10px;
+  border: none;
+  font-weight: 700;
+  font-size: 1.1rem;
+  min-width: 140px;
+  cursor: pointer;
+}
+.jour-btn:hover {
+  background: #666;
+}
+
+/* 📌 Seulement sur PC (au-dessus de 980px) */
+@media (min-width: 981px) {
+  .choix-jour {
+    position: absolute;
+    top: 50%;              /* centre vertical */
+    left: 8%;             /* décale un peu vers la gauche */
+    transform: translateY(-50%); /* corrige pour que ce soit bien centré verticalement */
+    text-align: left;      /* aligne le contenu à gauche */
+  }
+}
+
+
+/* -------------------------
+   Responsive : réduire la taille des pastilles mais garder 10 colonnes
+   ------------------------- */
+/* -------------------------
+   Responsive : ajustement des sièges
+   ------------------------- */
+@media (max-width: 980px){
+  :root{ --seat-size: 34px; --seat-gap:7px; } /* légèrement réduit sur tablette */
+}
+
+@media (max-width: 768px){
+  :root{ --seat-size: 34px; --seat-gap:6px; } /* plus grand sur téléphone */
+  .jour-btn{ min-width: 48%; font-size:1.15rem; padding:12px 16px; }
+}
+
+@media (max-width: 420px){
+  :root{ --seat-size: 32px; --seat-gap:5px; } /* garde de grosses cases sur très petits écrans */
+  .jour-btn{ width:85%; min-width:unset; }
+}
+
+
+/* -------------------------
+   Petites améliorations visuelles
+   ------------------------- */
+button:focus, a:focus { outline: 3px solid rgba(255,255,255,0.12); outline-offset:2px; }

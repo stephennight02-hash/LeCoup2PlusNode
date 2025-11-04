@@ -1,0 +1,153 @@
+body {
+  font-family: sans-serif;
+  color: #fff;
+  background-image: url(img/photo-1514306191717-452ec28c7814.jpg);
+  background-size: cover;
+  background-position: center;
+  min-height: 100vh;
+  padding-top: 130px;
+  text-align: center;
+}
+
+/* NAVBAR */
+header {
+  width: 100%;
+  background-color: #030301c9;
+  color: white;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  box-shadow: 0 4px 20px rgba(38, 11, 56, 0.995);
+}
+
+.navbar {
+  max-width: 1200px;
+  margin: auto;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo a {
+  text-decoration: none;
+  color: white;
+  font-size: 1.8rem;
+  font-weight: 700;
+  font-family: "Dancing Script", cursive;
+}
+
+.links {
+  display: flex;
+  gap: 3.5rem;
+  list-style: none;
+  font-size: 1.4rem;
+}
+
+.links a {
+  color: white;
+  text-decoration: none;
+}
+
+.burgermenubutton {
+  display: none;
+}
+
+.burger-menu {
+  display: none;
+}
+
+.show {
+  display: block;
+}
+
+/* ==========================
+   ADMIN GRILLE DE PLACES
+   ========================== */
+.content {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 25px;
+}
+
+.seats {
+  display: grid;
+  grid-template-columns: repeat(10, var(--seat-size, 45px));
+  grid-auto-rows: var(--seat-size, 45px);
+  gap: var(--seat-gap, 10px);
+  justify-content: center;
+  align-items: center;
+}
+
+.seat {
+  width: var(--seat-size, 45px);
+  height: var(--seat-size, 45px);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 14px;
+  box-shadow: 0 1px 0 rgba(0,0,0,0.25) inset;
+  transition: transform 0.1s ease;
+}
+
+.seat:hover {
+  transform: scale(1.08);
+}
+
+.seat.free {
+  background: #30af34;
+}
+
+.seat.reserved {
+  background: #575757;
+}
+
+.legend {
+  margin-top: 10px;
+}
+
+.legend .circle {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  margin-right: 6px;
+  vertical-align: middle;
+}
+
+.save-btn {
+  background: #444;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 12px 24px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.save-btn:hover {
+  background: #666;
+}
+
+/* Responsive : agrandir sur téléphone */
+@media (max-width: 768px) {
+  :root {
+    --seat-size: 70px;
+    --seat-gap: 14px;
+  }
+
+  .seat {
+    font-size: 1rem;
+  }
+}
