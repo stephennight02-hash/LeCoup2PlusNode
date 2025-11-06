@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assistant Spectateur IA Simple</title>
+    <!-- Tailwind CSS pour un design réactif et moderne -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Styles CSS du chat */
+        /* J'utilise ici un fond neutre pour que vous puissiez facilement placer ce chat dans votre propre design */
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background-color: #f0f4f8; /* Fond clair par défaut */
+            /* Centrage de l'application sur toute la page */
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+
+        /* Conteneur principal du chat (petit chat comme demandé) */
+        #chat-container {
+            max-width: 600px; /* Contrainte de largeur pour un 'petit chat' */
+            height: 75vh; /* Contrainte de hauteur pour éviter le plein écran */
+        }
+
+        .user-message { 
+            background-color: #3b82f6; color: white; 
+            border-radius: 1.5rem 0.5rem 1.5rem 1.5rem;
+        }
+        .ai-message { 
+            background-color: #ffffff; color: #1f2937; 
+            border-radius: 0.5rem 1.5rem 1.5rem 1.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.06);
+        }
+    </style>
+</head>
+<body>
+
+    <div id="chat-container" class="w-full bg-gray-100 rounded-xl shadow-2xl p-6 flex flex-col">
+        <h1 class="text-3xl font-bold text-gray-800 mb-6 text-center">
+            🎭 Chat des Infos Pratiques
+        </h1>
+
+        <div id="chat-window" class="flex-grow overflow-y-auto space-y-4 p-4 mb-4 bg-white rounded-lg border border-gray-200">
+        </div>
+
+        <div id="loading-indicator" class="text-center text-gray-500 mb-4 hidden">
+            <i class="fa-solid fa-spinner fa-spin mr-2"></i> L'IA réfléchit...
+        </div>
+
+        <form id="chat-form" class="flex gap-3">
+            <input type="text" id="user-input" placeholder="Ex: Où se trouve la salle de spectacle ?" 
+                   class="flex-grow p-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 shadow-sm" required>
+            <button type="submit" id="send-button" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition duration-200 shadow-md">
+                Envoyer
+            </button>
+        </form>
+    </div>
+
+<script type="module">
+    // URL du proxy (le routeur Express)
+    const chatProxyUrl = '/api/chat-assistant';
+
+    // Références DOM
+    const chatWindow = document.getElementById('chat-window');
+    const userInput = document.getElementById('user-input');
+    const loadingIndicator = document.getElementById('loading-indicator');
+    const chatForm = document.getElementById('chat-form');
+    const sendButton = document.getElementById('send-button');
+
+    // --- Fonctions d'affichage ---
+    function addMessage(text, sender) {
+        const messageContainer = document.createElement('div');
+        messageContainer.className = `flex ${sender === 'user' ? 'justify-end' : 'justify-start'}`;
+        const messageBubble = document.createElement('div');
+        messageBubble.className = `max-w-xs p-3 my-1 shadow-md transition-all duration-300 ${sender === 'user' ? 'user-message' : 'ai-message'}`;
+        messageBubble.innerHTML = sender === 'ai' ? formatText(text) : text;
+        messageContainer.appendChild(messageBubble);
+        chatWindow.appendChild(messageContainer);
+        // Scroll automatique vers le bas
+        chatWindow.scrollTop = chatWindow.scrollHeight;
+    }
+    function formatText(text) { return text.replace(/\n/g, '<br>'); }
+
+    // --- Initialisation ---
+    function initializeChat() {
+        addMessage("Bonjour ! Je suis l'assistant des Infos Pratiques. Posez-moi vos questions !", 'ai');
+        userInput.focus();
+    }
+
+
+    // --- Gestionnaire de soumission (Appel au BACKEND Express) ---
+    chatForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const query = userInput.value.trim();
+        if (!query) return;
+
+        addMessage(query, 'user');
+        userInput.value = ''; 
+        
+        // Désactiver l'interface pendant le chargement
+        userInput.disabled = true;
+        sendButton.disabled = true;
+        loadingIndicator.classList.remove('hidden');
+
+        try {
+            // L'appel au proxy Express envoie uniquement la requête utilisateur
+            const response = await fetch(chatProxyUrl, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    userQuery: query
+                })
+            });
+
+            if (!response.ok) {
+                // Tente de lire l'erreur JSON du serveur
+                const errorData = await response.json().catch(() => ({ error: 'Erreur serveur non JSON' }));
+                throw new Error(errorData.error || `Erreur HTTP: ${response.status}`);
+            }
+
+            const result = await response.json();
+            const aiText = result.text || "Désolé, je n'ai pas pu générer de réponse.";
+            
+            addMessage(aiText, 'ai');
+
+        } catch (error) {
+            console.error("Erreur lors de l'appel au serveur assistant:", error);
+            addMessage(`Oups ! Une erreur est survenue lors de la communication. (${error.message || 'Erreur inconnue'}). Veuillez vérifier la configuration de votre serveur Express et la clé API Gemini.`, 'ai');
+        } finally {
+            // Réactiver l'interface
+            loadingIndicator.classList.add('hidden');
+            userInput.disabled = false;
+            sendButton.disabled = false;
+            userInput.focus();
+        }
+    });
+
+    // Démarrer le chat au chargement de la page
+    initializeChat();
+</script>
+<!-- Font Awesome pour l'icône de chargement -->
+<script src="https://kit.fontawesome.com/4a1c5d9a9f.js" crossorigin="anonymous"></script> 
+</body>
+</html>
