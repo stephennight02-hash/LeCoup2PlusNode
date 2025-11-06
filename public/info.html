@@ -1,107 +1,670 @@
 <!DOCTYPE html>
-<html lang="be">
+<html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>LeCoup2Plus</title>
-  <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-  <link rel="icon" type="icon" href="img/img/logo.png" sizes="96x96" />
-  <meta property="og:type" content="website" />
-  <meta content="summary_large_image" name="twitter:card" />
-    <title>Informations</title>
-    <link rel="stylesheet" href="info.css">
-    <link rel="icon" type="icon" href="img/img/logo.png" sizes="96x96" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LeCoup2Plus - Assistant Chat Intégré</title>
+    <!-- Chargement de Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- VOTRE FOND D'ECRAN ET VOS POLICES -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Poetsen+One&family=Poppins:wght@400;600;700&display=swap');
+    </style>
+    
+    <!-- Font Awesome pour les icônes -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
+    <style>
+        /* Configuration Tailwind et Variables de base */
+        :root {
+            --primary-blue: #5b98eb;
+            --dark-bg: #1a1a1a; 
+            --menu-primary: #3b82f6; 
+            --user-bubble: #3b82f6; 
+            --ai-bubble-bg: #ffffff; 
+        }
+
+        /* --- VOS STYLES (GLOBAL RESETS & NAVBAR) --- */
+        
+        /* GLOBAL RESETS */
+        html { box-sizing: border-box; }
+        *,
+        *:before,
+        *:after {
+            box-sizing: inherit;
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            font-size: 21px;
+            color: #ffffff;
+            /* FOND D'ÉCRAN : Rétabli l'URL et assure que le fond couvre la page */
+            background-image: url(img/photo-1514306191717-452ec28c7814.jpg); 
+            background-attachment: fixed; /* Rend l'arrière-plan fixe lors du défilement */
+            background-position: center;
+            background-size: cover;
+            min-height: 100vh;
+            padding-top: 90px; /* Espace pour la navbar fixe */
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding-top: 70px; 
+            }
+        }
+
+        /* NAVBAR */
+        header {
+            width: 100%;
+            background-color: #030301c9;
+            color: white;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 20px rgba(38, 11, 56, 0.995);
+        }
+
+        .navbar {
+            max-width: 1200px;
+            margin: auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo a {
+            text-decoration: none;
+            color: rgb(255, 255, 255);
+            font-size: 1.8rem;
+            font-weight: 700;
+            font-family: "Dancing Script", cursive;
+        }
+
+        .links {
+            display: flex;
+            gap: 3.5rem;
+            list-style: none;
+            font-size: 1.4rem;
+        }
+
+        .links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .links a:hover {
+            color: #ff0000b5;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .action-button {
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            background-color: #ffffff10;
+            color: white;
+            text-decoration: none;
+            border: 1px solid #ffffff30;
+            transition: all 0.3s ease;
+        }
+
+        .action-button:hover {
+            background-color: #ffffff39;
+        }
+
+        .burgermenubutton {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        .burgermenubutton img {
+             width: 30px; 
+             height: 30px;
+             filter: invert(100%); 
+        }
+
+        .burger-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: #070917;
+            width: 100%;
+            padding: 2rem 1.5rem;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+            transition: max-height 0.3s ease;
+        }
+
+        .burger-menu ul {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .burger-menu a {
+            color: white;
+            text-decoration: none;
+        }
+
+        .burger-menu .divider {
+            height: 1px;
+            background: #ffffff20;
+            margin: 1rem 0;
+        }
+
+        .buttons-burger-menu {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .show {
+            display: block !important; 
+        }
+
+        /* RESPONSIVE NAVBAR */
+        @media (max-width: 768px) {
+            .links,
+            .buttons {
+                display: none;
+            }
+
+            .burgermenubutton {
+                display: block;
+            }
+        }
+
+
+        /* --- STYLES SPÉCIFIQUES AU CONTENU (Chat/Infos) --- */
+
+        /* Conteneur principal */
+        .content-container {
+            display: flex;
+            justify-content: center;
+            padding: 2rem 1rem;
+            padding-bottom: 4rem; /* Assure un pied de page */
+        }
+
+        .main-content-flex {
+            display: flex;
+            flex-direction: column; 
+            gap: 2rem;
+            max-width: 900px;
+            width: 100%;
+            align-items: center;
+        }
+        @media (min-width: 768px) {
+            .main-content-flex {
+                flex-direction: row; 
+                align-items: flex-start;
+                justify-content: center;
+            }
+        }
+
+        /* Styles de la carte Infos Pratiques (Côté Gauche) */
+        .info-box {
+            background: rgba(255, 255, 255, 0.9); /* Semi-transparent */
+            border-radius: 1rem; padding: 2rem; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5); width: 100%; max-width: 400px; text-align: center; border-top: 5px solid var(--primary-blue); transition: transform 0.3s ease;
+            color: #1a1a1a; /* Texte par défaut foncé pour lisibilité */
+        }
+        .info-box h3 { font-size: 1.5rem; font-weight: 700; color: #1a1a1a; margin-bottom: 1.5rem; }
+        .info-box .icon { color: var(--primary-blue); font-size: 3rem; margin-bottom: 1rem; }
+        .info-box a { 
+            text-decoration: none; 
+            color: #1a1a1a; 
+            font-size: 1.1rem; 
+            font-weight: 500; 
+            padding: 0.75rem 1rem; 
+            border-radius: 0.5rem; 
+            background-color: #f3f4f6; 
+            transition: background-color 0.3s, color 0.3s, box-shadow 0.3s; 
+            display: flex; 
+            align-items: center; 
+            /* Rétablit l'alignement à gauche pour les icônes */
+            justify-content: flex-start; 
+            margin-bottom: 0.75rem; 
+        }
+        .info-box a:hover { background-color: var(--primary-blue); color: white; box-shadow: 0 5px 15px rgba(91, 152, 235, 0.4); }
+
+        /* Conteneur du Chat (Côté Droit) */
+        .chat-container {
+            width: 100%;
+            max-width: 400px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 1rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            display: flex;
+            flex-direction: column;
+            border-top: 5px solid var(--menu-primary);
+            height: 70vh;
+        }
+
+        /* Styles des messages */
+        .user-message { 
+            background-color: var(--user-bubble); 
+            color: white; 
+            border-radius: 1.5rem 0.5rem 1.5rem 1.5rem;
+        }
+        .ai-message { 
+            background-color: var(--ai-bubble-bg); 
+            color: #1a1a1a; 
+            border-radius: 0.5rem 1.5rem 1.5rem 1.5rem;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+
+        /* Masquer l'image du menu burger (laisser l'icône FA) */
+        .burgermenubutton img { display: none; }
+        .burgermenubutton i { display: block; }
+    </style>
 </head>
-
-<header>
-  <div class="navbar">
-    <div class="logo">
-      <a href="#">LeCoup2Plus</a>
-    </div>
-    <ul class="links">
-      <li><a href="index.html">Accueil</a></li>
-      <li><a href="info.html">Informations</a></li>
-      <li><a href="galerie.html">Galerie</a></li>
-      <li><a href="boutiqueven.html">Réservation</a></li>
-    </ul>
-    <div class="buttons">
-      <div id="user-info" style="display: none; align-items: center; gap: 10px; margin-left: 20px;">
-        <img id="user-photo" src="" alt="Photo de profil" style="width: 40px; height: 40px; border-radius: 50%;">
-        <span id="user-name" style="color: white; font-weight: bold;"></span>
-      </div>
-    </div>
-
-    <!-- ✅ Nouveau bouton menu personnalisé -->
-    <div class="burgermenubutton" style="cursor: pointer;">
-      <img src="img/menu.png" alt="Menu" style="width: 30px; height: 30px;">
-    </div>
-  </div>
-
-  <div class="burger-menu">
-    <ul class="links">
-      <li><a href="index.html">Accueil</a></li>
-      <li><a href="info.html">Informations</a></li>
-      <li><a href="galerie.html">Galerie</a></li>
-      <li><a href="boutiqueven.html">Réservation</a></li>
-      <div class="divider"></div>
-      <div class="buttons-burger-menu"></div>
-    </ul>
-  </div>
-
-  <script>
-    const burgerBtn = document.querySelector(".burgermenubutton");
-    const burgerMenu = document.querySelector(".burger-menu");
-
-    burgerBtn.addEventListener("click", () => {
-      burgerMenu.classList.toggle("show");
-    });
-  </script>
-</header>
-
 
 <body>
 
-<div class="container">
-  <div style="--clr:#f5750c;" class="box">
-    <div class="content">
-      <div class="icon"></div>
-      <div class="text">
-        <h3>Présentation</h3>
-        <p>
-          LeCoup2Plus est une troupe théatrale fondée par Mauro Stefano et Guy Byloos.
-        </p>
-      </div>
+<header>
+    <!-- VOTRE NAVBAR HTML -->
+    <div class="navbar">
+        <div class="logo">
+            <a href="#">LeCoup2Plus</a>
+        </div>
+        <ul class="links">
+            <li><a href="index.html">Accueil</a></li>
+            <li><a href="info.html">Informations</a></li>
+            <li><a href="galerie.html">Galerie</a></li>
+            <li><a href="reservation.html">Réservation</a></li>
+            </ul>
+        <div class="buttons">
+            <div id="user-info" style="display: none; align-items: center; gap: 10px; margin-left: 20px;">
+                <img id="user-photo" src="" alt="Photo de profil" style="width: 40px; height: 40px; border-radius: 50%;">
+                <span id="user-name" style="color: white; font-weight: bold;"></span>
+            </div>
+        </div>
+
+        <div class="burgermenubutton" id="menu-button" style="cursor: pointer;">
+            <!-- Utilisation d'une icône Font Awesome pour la fiabilité -->
+            <i class="fas fa-bars text-white text-2xl"></i> 
+            <!-- Rétabli l'image selon votre demande, mais masquée par CSS pour utiliser l'icône FA -->
+            <img src="img/menu.png" alt="Menu" style="width: 30px; height: 30px;">
+        </div>
     </div>
-  </div>
-  <div style="--clr:#eb5ae5;" class="box">
-    <div class="content">
-      <div class="icon"></div>
-      <div class="text">
-        <h3>Spectacles</h3>
-        <p>
-          Nous avons déja joués, J'aime beaucoup ce que vous faites, Toc Toc, Funny Money et Sexe et Jalousie.
-        </p>
-      </div>
+
+    <div class="burger-menu" id="mobile-menu-content">
+        <ul class="links">
+            <li><a href="index.html">Accueil</a></li>
+            <li><a href="info.html">Informations</a></li>
+            <li><a href="galerie.html">Galerie</a></li>
+            <li><a href="reservation.html">Réservation</a></li>
+            <li><a href="info_assistant.html">Chat Bot</a></li>
+            <div class="divider"></div>
+            <div class="buttons-burger-menu"></div>
+        </ul>
     </div>
-  </div>
-  <div style="--clr:#5b98eb;" class="box">
-    <div class="content">
-      <div class="icon"></div>
-      <div class="text">
-        <h3>Infos Pratiques</h3>
-        <p>
-          <a href="https://api.whatsapp.com/send?phone=%2B32476777961&app=facebook&entry_point=page_cta&fbclid=IwY2xjawLqK4hleHRuA2FlbQIxMABicmlkETB5d0pzbDhEM2dqZlVvdEdRAR6E4bfRi5peVyu5NxOHD-XQhe3-0sXqRYpfLxOiccpH5G_8Ukx-o9sLCPLD0Q_aem_7-42GQ9HlMOqUE5yCtDg7w">Whatsapp</a>
-          <a href="">lecoup2plus@outlook.fr</a>
-          <a href="https://www.facebook.com/profile.php?id=100066436214728&sk=reviews&locale=fr_FR">Facebook </a>
-        </p>
-      </div>
+</header>
+
+<main class="content-container">
+    <div class="main-content-flex">
+        <!-- Colonne 1 : Infos Pratiques (Icônes SVG) --><div class="info-box">
+            <div class="icon">
+                <!-- ICÔNE PRINCIPALE "INFO" EN SVG --><svg class="h-10 w-10 text-red-500 mx-auto" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12Zm8.706-1.444c1.192-.582 2.917.348 3.51 1.968a.75.75 0 0 0 1.5-.538c-.347-1.127-.406-1.57-.424-1.666a.75.75 0 0 0-.256-.475 1.5 1.5 0 0 0-.583-.35l-.487-.13-.42-.116c-.752-.206-1.46-.516-2.072-.943C9.76 8.356 9 7.7 9 7.5a.75.75 0 0 1 1.5 0c0 .126.398.531 1.05.856.574.282 1.25.467 1.948.513a.75.75 0 0 0 .147-1.492.75.75 0 0 0-.147 1.492c-.394-.027-.8-.113-1.21-.258a3.166 3.166 0 0 1-1.458-.933.75.75 0 0 0-1.077-.074.75.75 0 0 0-.074 1.077ZM12 15.75a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Z" clip-rule="evenodd" />
+                </svg>
+            </div>
+            <div class="text">
+                <h3>Contact & Réseaux</h3>
+                <p>
+                    <!-- ICÔNE WHATSAPP EN SVG --><a href="https://api.whatsapp.com/send?phone=%2B32476777961" target="_blank" rel="noopener noreferrer" class="flex items-center space-x-2 my-1">
+                        <svg class="h-6 w-6 text-green-500" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12.04 2c-5.46 0-9.84 4.38-9.84 9.84 0 1.83.504 3.56 1.378 5.094L2 22l5.244-1.378a9.814 9.814 0 005.616 1.404c5.46 0 9.84-4.38 9.84-9.84S17.5 2 12.04 2zM17.152 15.652c-.174.29-.49.52-.806.626-.29.09-1.5.096-2.586-.288-.6-.204-1.512-.558-2.61-.954-2.724-1.002-4.524-3.768-4.6-3.882-.072-.114-.594-.744-.594-1.35 0-.612.306-.918.42-.96.096-.036.21-.06.468-.06.216 0 .49.006.696.006.24 0 .336.072.378.168.144.348.48 1.152.516 1.224.036.084.06.192.012.312-.048.12-.306.474-.396.564-.09.09-.174.198-.096.342.078.144.348.6.762.96.414.36 2.454 1.584 2.922 1.8.468.216.786.312 1.062.372.486.096.936.036 1.284-.216.348-.252.594-.588.756-.84.168-.252.288-.21.468-.15.192.06.996.474 1.164.558.174.09.288.132.336.204.048.072.048.438-.24 1.056z" />
+                        </svg> 
+                        <span>Whatsapp</span>
+                    </a>
+                    
+                    <!-- ICÔNE EMAIL EN SVG --><a href="mailto:lecoup2plus@outlook.fr" class="flex items-center space-x-2 my-1">
+                        <svg class="h-6 w-6 text-blue-400" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M2.003 5.884l8.997 5.765 8.997-5.765C18.426 4.364 16.51 4 12 4s-6.426.364-7.997 1.884zm0 2.223V16.5c0 1.38 1.12 2.5 2.5 2.5h15c1.38 0 2.5-1.12 2.5-2.5V8.107l-9.584 6.138c-.334.214-.738.318-1.139.318-.401 0-.805-.104-1.139-.318L2.003 8.107z" />
+                        </svg>
+                        <span>lecoup2plus@outlook.fr</span>
+                    </a>
+                    
+                    <!-- ICÔNE FACEBOOK EN SVG --><a href="https://www.facebook.com/profile.php?id=100066436214728&sk=reviews&locale=fr_FR" target="_blank" rel="noopener noreferrer" class="flex items-center space-x-2 my-1">
+                        <svg class="h-6 w-6 text-blue-600" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M14 13.5h2.5L17 9h-3v-2c0-1.03.62-1.63 1.57-1.63.38 0 .8.04.99.07v-2.19C16.14 2.45 15.22 2 13.6 2c-3.15 0-4.63 1.57-4.63 4.4v2.1h-3V9h3v4.5H9v8h4v-8h1z"/>
+                        </svg>
+                        <span>Page Facebook</span>
+                    </a>
+                </p>
+                <p class="text-sm text-gray-500 mt-4 text-left px-3">
+                    <svg class="inline h-4 w-4 mr-2 text-gray-500" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15.5l-5-5 1.41-1.41L11 15.59l7.59-7.59L20 9.41l-9 9z"/>
+                    </svg>
+                    <span>ID Utilisateur:</span> <span id="user-id-display" class="break-all text-xs">Chargement...</span>
+                </p>
+            </div>
+        </div>
+        
+        <!-- Colonne 2 : Assistant Chat (Fonctionnel) -->
+        <div class="chat-container">
+            <div class="flex flex-col h-full">
+                <h3 class="text-xl font-bold text-center pt-4" style="color: #1a1a1a;">
+                    🎭 Chat des Infos Pratiques
+                </h3>
+                <p class="text-xs text-center text-gray-500 mb-2">Posez vos questions sur la salle, le parking, le bar...</p>
+
+                <!-- Fenêtre de Chat (Affichage des messages) -->
+                <div id="chat-window" class="flex-grow overflow-y-auto space-y-4 p-4 mb-2 bg-gray-50 rounded-lg mx-3 shadow-inner">
+                    <!-- Les messages de chat apparaîtront ici -->
+                </div>
+
+                <!-- Indicateur de Chargement et Erreur -->
+                <div id="loading-indicator" class="text-center text-gray-500 text-sm mb-2 hidden">
+                    <i class="fas fa-spinner fa-spin mr-2"></i> Chargement...
+                </div>
+                <div id="error-message" class="text-center text-red-600 mb-2 p-1 bg-red-100 border border-red-300 rounded mx-3 hidden text-sm">
+                    <!-- Message d'erreur -->
+                </div>
+
+                <!-- Formulaire d'entrée -->
+                <form id="chat-form" class="flex gap-2 p-3 pt-0">
+                    <input type="text" id="user-input" placeholder="Ex: Où se garer ?" 
+                           class="flex-grow p-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 shadow-sm text-base text-gray-800" required disabled>
+                    <button type="submit" id="send-button" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-4 rounded-lg transition duration-200 shadow-md" disabled>
+                        Envoyer
+                    </button>
+                </form>
+            </div>
+        </div>
     </div>
-  </div>
-</div>
+</main>
 
 
+<script type="module">
+    // ----------------------------------------------------------------
+    // 0. Variables Globales et Dépendances
+    // ----------------------------------------------------------------
+
+    // Importations Firebase et Firestore
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+    import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+    import { getFirestore, doc, setDoc, getDoc, setLogLevel } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+    
+    let db;
+    let auth;
+    let knowledgeBase = null; 
+    let userId = 'default-user'; 
+
+    // Récupération des variables globales de l'environnement Canvas
+    const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+    const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : null;
+    const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
+
+    // Éléments du DOM pour le Chat
+    const chatWindow = document.getElementById('chat-window');
+    const userInput = document.getElementById('user-input');
+    const loadingIndicator = document.getElementById('loading-indicator');
+    const chatForm = document.getElementById('chat-form');
+    const sendButton = document.getElementById('send-button');
+    const errorMessage = document.getElementById('error-message');
+    const userIdDisplay = document.getElementById('user-id-display');
+
+    // API Gemini Configuration
+    const API_MODEL = 'gemini-2.5-flash-preview-09-2025';
+    const apiKey = ""; 
+    const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/${API_MODEL}:generateContent?key=${apiKey}`;
+
+
+    // BASE DE CONNAISSANCES PAR DÉFAUT (Utilisée si Firestore est vide)
+    const DEFAULT_KNOWLEDGE_BASE = `
+        Vous êtes l'Assistant Spectateur pour la troupe de théâtre "Le Coup 2 Plus". Votre rôle est de répondre aux questions des utilisateurs de manière concise, amicale et professionnelle, en vous basant STRICTEMENT sur les informations fournies ci-dessous.
+
+        Règles IMPÉRATIVES de l'IA:
+        1. Répondez UNIQUEMENT aux questions en utilisant les informations contenues dans cette base de connaissances.
+        2. Si la question dépasse cette base de connaissances (ex: "Qui est Shakespeare?"), répondez poliment que vous ne possédez pas cette information et que votre champ de compétence est limité aux Informations Pratiques de la troupe.
+        3. N'inventez JAMAIS d'informations ou de détails.
+        4. Le compte bancaire pour les réservations est BE71 1262 0995 6469.
+
+        Base de Connaissances Pratiques:
+        - Localisation de la salle: La salle où la troupe joue, se trouve au Centre Culturel de Philippeville en Belgique. Rue de France 1, 5600 Philippeville
+        - Parking: Le Centre culturel se trouve près d'une place donc il y'a régulièrement des places mais il se peut que celles-ci soient parfois souvent occupées meme si la plupart de temps il ne faut pas se garer très loin.
+        - Heure d'arrivée / Ouverture des portes: Il est conseillé d'arriver 15 minutes minimum avant l'heure du spectacle. Les portes ouvrent généralement 30 minutes avant la représentation.
+        - Annulation de réservation: Les réservations sont manuelles et finales une fois le virement bancaire effectué. Les billets sont remboursables si vous prévenez suffisament à l'avance ou annulation du spectacle par la troupe elle-même. Dans ce cas, veuillez contacter Mauro ou Guy via les numéros de téléphone fournis sur le site.
+        - PMR (Personnes à Mobilité Réduite): La salle est entièrement accessible aux Personnes à Mobilité Réduite (ascenseur). Veuillez signaler votre présence lors de la réservation pour que nous puissions vous garantir une place adaptée.
+        - Bar / Boissons: Un bar vendant des boissons (softs, bières, Fromages ou Charcuteries) est ouvert pendant l'entracte et après le spectacle. Les paiements par carte sont acceptés au bar.
+        - Options de paiement (Réservation): Le seul moyen de paiement pour les billets est le virement bancaire sur le compte BE71 1262 0995 6469 (avec indication du nom et du nombre de places dans la communication).
+        - Toilettes: Des toilettes pour tout le monde sont prévues ainsi que pour les PMR. 
+    `;
+
+    // ----------------------------------------------------------------
+    // 1. Fonctions d'Initialisation (Firebase / Firestore)
+    // ----------------------------------------------------------------
+
+    /**
+     * Tente de récupérer la base de connaissances depuis Firestore.
+     */
+    async function loadKnowledgeBase() {
+        const knowledgeDocRef = doc(db, `/artifacts/${appId}/public/data/knowledge`, 'pratique');
+        
+        try {
+            loadingIndicator.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Connexion à la base de données...';
+            
+            const docSnap = await getDoc(knowledgeDocRef);
+
+            if (docSnap.exists() && docSnap.data().content) {
+                console.log("Base de connaissances chargée depuis Firestore.");
+                return docSnap.data().content;
+            } else {
+                loadingIndicator.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Initialisation des données par défaut...';
+                await setDoc(knowledgeDocRef, { content: DEFAULT_KNOWLEDGE_BASE });
+                console.warn("Création d'un document 'pratique' avec des données par défaut.");
+                return DEFAULT_KNOWLEDGE_BASE;
+            }
+
+        } catch (e) {
+            console.error("Erreur critique lors du chargement de la base de connaissances Firestore:", e);
+            errorMessage.textContent = "Erreur critique: La base de données est inaccessible. Le chat est désactivé.";
+            errorMessage.classList.remove('hidden');
+            return null; 
+        }
+    }
+
+
+    /**
+     * Initialise Firebase et le Chat Assistant.
+     */
+    async function initializeAppAndChat() {
+        if (!firebaseConfig) {
+             console.error("Configuration Firebase non disponible.");
+             errorMessage.textContent = "Configuration Firebase manquante. Le chat est désactivé.";
+             errorMessage.classList.remove('hidden');
+             return;
+        }
+
+        try {
+            // Initialisation de Firebase
+            const app = initializeApp(firebaseConfig);
+            db = getFirestore(app);
+            auth = getAuth(app);
+            setLogLevel('Debug'); 
+
+            // 1. Authentification
+            loadingIndicator.classList.remove('hidden');
+            if (initialAuthToken) {
+                await signInWithCustomToken(auth, initialAuthToken);
+            } else {
+                await signInAnonymously(auth);
+            }
+            
+            // Définir l'ID utilisateur
+            userId = auth.currentUser?.uid || crypto.randomUUID();
+            userIdDisplay.textContent = userId;
+
+            // 2. Chargement de la Base de Connaissances
+            knowledgeBase = await loadKnowledgeBase();
+
+            if (knowledgeBase) {
+                // 3. Initialisation du Chat (si la base est chargée)
+                loadingIndicator.classList.add('hidden');
+                userInput.disabled = false;
+                sendButton.disabled = false;
+                addMessage("Bonjour ! Je suis l'assistant des Infos Pratiques. Posez-moi des questions sur les lieux, le parking, l'accessibilité ou la billetterie !", 'ai');
+            } else {
+                // Échec du chargement
+                loadingIndicator.classList.add('hidden');
+            }
+
+        } catch (error) {
+            console.error("Échec de l'initialisation complète:", error);
+            loadingIndicator.classList.add('hidden');
+            errorMessage.textContent = `Erreur d'initialisation: ${error.message}. Le chat est désactivé.`;
+            errorMessage.classList.remove('hidden');
+        }
+    }
+
+    // Lancement de l'application
+    initializeAppAndChat();
+
+
+    // ----------------------------------------------------------------
+    // 2. LOGIQUE D'AFFICHAGE DU CHAT 
+    // ----------------------------------------------------------------
+
+    function addMessage(text, sender) {
+        const messageContainer = document.createElement('div');
+        messageContainer.className = `flex ${sender === 'user' ? 'justify-end' : 'justify-start'}`;
+
+        const messageBubble = document.createElement('div');
+        messageBubble.className = `max-w-xs p-3 my-1 shadow-md transition-all duration-300 ${sender === 'user' ? 'user-message' : 'ai-message'}`;
+        
+        if (sender === 'ai') {
+            messageBubble.innerHTML = formatText(text);
+        } else {
+            messageBubble.textContent = text;
+        }
+
+        messageContainer.appendChild(messageBubble);
+        chatWindow.appendChild(messageContainer);
+        
+        chatWindow.scrollTop = chatWindow.scrollHeight;
+    }
+
+    function formatText(text) {
+        return text.replace(/\n/g, '<br>');
+    }
+
+    // ----------------------------------------------------------------
+    // 3. Gestion de l'Envoi de Message et Appel API Gemini
+    // ----------------------------------------------------------------
+    
+    chatForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        if (!knowledgeBase || userInput.disabled) {
+            addMessage("L'assistant n'est pas prêt. Veuillez patienter ou vérifier l'erreur.", 'ai');
+            return;
+        }
+
+        const query = userInput.value.trim();
+        if (!query) return;
+
+        // 1. Afficher le message de l'utilisateur
+        addMessage(query, 'user');
+        userInput.value = ''; 
+        userInput.disabled = true;
+        sendButton.disabled = true;
+        
+        // 2. Afficher l'indicateur de chargement
+        loadingIndicator.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> L\'IA réfléchit...';
+        loadingIndicator.classList.remove('hidden');
+
+        try {
+            const systemInstruction = knowledgeBase; 
+
+            const payload = {
+                contents: [{ parts: [{ text: query }] }],
+                systemInstruction: {
+                    parts: [{ text: systemInstruction }]
+                },
+                generationConfig: {
+                    temperature: 0.1, 
+                    maxOutputTokens: 2048,
+                }
+            };
+
+            const response = await fetchWithExponentialBackoff(apiUrl, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+
+            if (!response.ok) {
+                throw new Error(`Erreur HTTP! status: ${response.status}`);
+            }
+
+            const result = await response.json();
+            const aiText = result.candidates?.[0]?.content?.parts?.[0]?.text || "Désolé, je n'ai pas pu générer de réponse. Veuillez réessayer.";
+            
+            // 3. Afficher la réponse de l'IA
+            addMessage(aiText, 'ai');
+
+        } catch (error) {
+            console.error("Erreur lors de l'appel à l'API Gemini:", error);
+            addMessage("Oups ! Une erreur est survenue lors de la communication avec l'assistant. (Détails en console).", 'ai');
+        } finally {
+            // 4. Masquer l'indicateur de chargement et réactiver les contrôles
+            loadingIndicator.classList.add('hidden');
+            userInput.disabled = false;
+            sendButton.disabled = false;
+            userInput.focus();
+        }
+    });
+
+    // ----------------------------------------------------------------
+    // 4. Fonction Utilitaires et Logique du Menu Responsive
+    // ----------------------------------------------------------------
+
+    /**
+     * Gère les tentatives d'appel API avec un délai croissant (backoff).
+     */
+    async function fetchWithExponentialBackoff(url, options, maxRetries = 5) {
+        let attempt = 0;
+        while (attempt < maxRetries) {
+            try {
+                const response = await fetch(url, options);
+                if (response.status === 429) { 
+                    throw new Error('API Rate Limit Exceeded');
+                }
+                return response;
+            } catch (error) {
+                if (error.message !== 'API Rate Limit Exceeded' || attempt === maxRetries - 1) {
+                    throw error; 
+                }
+                const delay = Math.pow(2, attempt) * 1000 + Math.random() * 1000;
+                attempt++;
+                await new Promise(resolve => setTimeout(resolve, delay));
+            }
+        }
+    }
+    
+    // Logique du Menu Responsive (adaptée à votre structure)
+    const burgerBtn = document.getElementById("menu-button");
+    const burgerMenu = document.getElementById("mobile-menu-content");
+
+    burgerBtn.addEventListener("click", () => {
+        burgerMenu.classList.toggle("show");
+    });
+
+</script>
 
 </body>
 </html>

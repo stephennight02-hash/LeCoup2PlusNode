@@ -154,13 +154,6 @@ header {
   }
 }
 
-/* --- Styles généraux et de flexcontact (inchangés) --- */
-body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background-color: #1a1a1a;
-    color: #eee;
-}
 
 .flexcontact {
     height: 10rem;
@@ -192,15 +185,15 @@ body {
 /* --- Section Cards : Mobile-First (par défaut) --- */
 .cards-container-wrapper {
     margin-top: 3rem;
-    padding: 0 1rem; /* Conserve le padding pour l'espace intérieur */
-    max-width: 1200px; /* Assure une largeur maximale */
-    margin-left: auto; /* Centre le conteneur wrapper */
+    padding: 0 1rem; 
+    max-width: 1200px; 
+    margin-left: auto; 
     margin-right: auto;
 }
 
 .cards-container {
     display: grid;
-    grid-template-columns: 1fr; /* Une seule colonne par défaut pour mobile */
+    grid-template-columns: 1fr;
     gap: 1.5rem;
     justify-items: center;
     padding: 1rem 0;
@@ -213,10 +206,7 @@ body {
     /* MODIFIÉ: max-width légèrement réduit pour les très petits écrans */
     max-width: 350px;
     /* MODIFIÉ: height réduite pour les très petits écrans */
-    height: 480px; /* Entre 200px et 350px de hauteur pour la carte complète est un peu petit,
-                      j'ai choisi 480px pour que le contenu reste lisible.
-                      Si tu veux vraiment 200-350px, cela pourrait tronquer le texte
-                      ou rendre l'image trop petite. */
+    height: 480px; 
 
     background-color: #f2f2f243;
     border-radius: 10px;
@@ -233,68 +223,22 @@ body {
 
 .card img {
     width: 100%;
-    height: 100%; /* L'image remplit la carte */
+    height: 100%; 
     object-fit: cover;
     transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-.card:hover {
-    transform: scale(1.05);
-    box-shadow: 0 8px 16px rgba(255, 255, 255, 0.2);
-}
 
-.card__content {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    padding: 20px;
-    box-sizing: border-box;
-    background-color: #333333fc;
-    transform: rotateX(-90deg);
-    transform-origin: bottom;
-    transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    color: #fff;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-}
-
-.card:hover .card__content {
-    transform: rotateX(0deg);
-}
-
-.card__title {
-    margin: 0;
-    font-size: 28px; /* Taille de titre légèrement augmentée pour les grandes cartes */
-    font-weight: 700;
-}
-
-.card__description {
-    margin: 15px 0 0; /* Marge légèrement augmentée */
-    font-size: 16px; /* Taille de description légèrement augmentée */
-    color: #b9b8b8;
-    line-height: 1.5; /* Interligne ajustée */
-}
-
-.card:hover svg {
-    transform: scale(0);
-}
-
-/* --- Media Query pour les écrans plus larges (tablettes et desktops) --- */
 @media (max-width: 768px) {
     .cards-container {
-        grid-template-columns: repeat(2, 1fr); /* 2 colonnes */
+        grid-template-columns: repeat(2, 1fr); 
         gap: 2rem;
     }
 
     .card {
-        width: 100%; /* Laisse la grille gérer la largeur */
-        max-width: 250px; /* Taille maximale de la carte sur écrans moyens */
-        height: 280px; /* Hauteur fixe plus grande pour la carte sur écrans moyens */
+        width: 100%; 
+        max-width: 250px; 
+        height: 280px;
     }
 }
 
@@ -318,7 +262,6 @@ body {
     margin-bottom: 2rem;
     padding: 0 1rem;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-    /* NOUVEAU: Mettre en gras les titres de section */
     font-weight: bold;
 }
 
@@ -326,11 +269,10 @@ body {
 .section-divider {
     border: none;
     /* MODIFIÉ: Couleur mauve pour la bordure */
-    border-top: 3px solid rgb(128, 0, 128); /* Un mauve plus prononcé */
+    border-top: 3px solid rgb(128, 0, 128); 
     width: 60%;
     max-width: 800px;
     margin: 4rem auto;
-    /* MODIFIÉ: Lueur mauve pour le style */
     box-shadow: 0 0 10px rgba(128, 0, 128, 0.8);
     border-radius: 5px;
 }
@@ -457,7 +399,7 @@ body {
 .admin-button {
     position: fixed;
     bottom: 20px;
-    left: 20px;     /* Changement ici : de 'right' à 'left' */
+    left: 20px;   
     z-index: 1000;
     display: block;
     cursor: pointer;

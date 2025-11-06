@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title id="page-title">Réservation de Places</title>
+<!-- Assurez-vous d'avoir ce fichier dans public/ -->
+<link rel="stylesheet" href="reservation.css"> 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="icon" type="icon" href="img/logo123.png" sizes="96x96" />
+</head>
+
+<body>
+
+<header>
+  <div class="navbar">
+    <div class="logo">
+      <a href="#">LeCoup2Plus</a>
+    </div>
+    <ul class="links">
+      <li><a href="index.html">Accueil</a></li>
+      <li><a href="info.html">Informations</a></li>
+      <li><a href="galerie.html">Galerie</a></li>
+      <li><a href="reservation.html">Réservation</a></li>
+    </ul>
+    <div class="buttons">
+      <div id="user-info" style="display: none; align-items: center; gap: 10px; margin-left: 20px;">
+        <img id="user-photo" src="" alt="Photo de profil" style="width: 40px; height: 40px; border-radius: 50%;">
+        <span id="user-name" style="color: white; font-weight: bold;"></span>
+      </div>
+    </div>
+
+    <!-- ✅ Nouveau bouton menu personnalisé -->
+    <div class="burgermenubutton" style="cursor: pointer;">
+      <img src="img/menu.png" alt="Menu" style="width: 30px; height: 30px;">
+    </div>
+  </div>
+
+  <div class="burger-menu">
+    <ul class="links">
+      <li><a href="index.html">Accueil</a></li>
+      <li><a href="info.html">Informations</a></li>
+      <li><a href="galerie.html">Galerie</a></li>
+      <li><a href="reservation.html">Réservation</a></li>
+      <div class="divider"></div>
+      <div class="buttons-burger-menu"></div>
+    </ul>
+  </div>
+
+  <script>
+    const burgerBtn = document.querySelector(".burgermenubutton");
+    const burgerMenu = document.querySelector(".burger-menu");
+
+    burgerBtn.addEventListener("click", () => {
+      burgerMenu.classList.toggle("show");
+    });
+  </script>
+</header>
+
+
+<main class="content">
+  <!-- Section de sélection des jours sur la gauche/haut -->
+  <section class="choix-jour">
+    <h2>Choisissez un jour</h2>
+    <div class="jours-container">
+      <!-- Les liens pointent vers CE MEME fichier avec un paramètre d'URL différent -->
+      <button class="jour-btn" data-day="ven"><a href="reservation.html?day=ven">Vendredi</a></button>
+      <button class="jour-btn" data-day="sam"><a href="reservation.html?day=sam">Samedi</a></button>
+      <button class="jour-btn" data-day="dim"><a href="reservation.html?day=dim">Dimanche</a></button>
+    </div>
+  </section>
+
+
+<!-- Section de la grille de places -->
+  <section class="reservation">
+    <!-- Le titre (Vendredi 24/09) sera mis à jour par JavaScript -->
+    <div class="scene" id="day-display">🎭 Chargement du jour...</div> 
+    <div class="seats" id="seats-container">
+        <!-- Les places seront injectées ici par reservation.js -->
+        <div style="color:white;">Chargement des places...</div>
+    </div>
+
+
+<div class="legend">
+      <p><span><span class="circle" style="background:#30af34;"></span> Disponibles</span>
+        <span><span class="circle" style="background:#575757;"></span> Réservées</span></p>
+    </div>
+
+
+<div class="reservation-info">
+      <p>Pour réserver, effectuez un virement de <strong>10€</strong> en indiquant le <strong>nombre de places</strong> et <strong>votre nom</strong> en communication.</p>
+      <p>💳 N° de compte : <strong>BE71 1262 0995 6469</strong></p>
+      <p class="warning-note" style="color: orange; font-weight: bold; margin-top: 15px;">
+        ⚠️ Le système actuel ne permet qu'une visualisation. La réservation est manuelle (par virement) pour l'instant.
+      </p>
+    </div>
+  </section>
+</main>
+
+
+<!-- Le nouveau fichier JavaScript externe qui contient toute la logique dynamique -->
+<script src="reservation.js"></script>
+
+</body>
+</html>

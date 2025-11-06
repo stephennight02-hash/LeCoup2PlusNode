@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notre Galerie</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="icon" href="img/logo123.png" sizes="96x96" />
+    <link rel="stylesheet" href="galerie.css">
+</head>
+<body>
+
+<header>
+  <div class="navbar">
+    <div class="logo">
+      <a href="#">LeCoup2Plus</a>
+    </div>
+    <ul class="links">
+      <li><a href="index.html">Accueil</a></li>
+      <li><a href="info.html">Informations</a></li>
+      <li><a href="galerie.html">Galerie</a></li>
+      <li><a href="reservation.html">Réservation</a></li>
+    </ul>
+    <div class="buttons">
+      <div id="user-info" style="display: none; align-items: center; gap: 10px; margin-left: 20px;">
+        <img id="user-photo" src="" alt="Photo de profil" style="width: 40px; height: 40px; border-radius: 50%;">
+        <span id="user-name" style="color: white; font-weight: bold;"></span>
+      </div>
+    </div>
+
+    <div class="burgermenubutton" style="cursor: pointer;">
+      <img src="img/menu.png" alt="Menu" style="width: 30px; height: 30px;">
+    </div>
+  </div>
+
+  <div class="burger-menu">
+    <ul class="links">
+      <li><a href="index.html">Accueil</a></li>
+      <li><a href="info.html">Informations</a></li>
+      <li><a href="galerie.html">Galerie</a></li>
+      <li><a href="reservation.html">Réservation</a></li>
+      <div class="divider"></div>
+      <div class="buttons-burger-menu"></div>
+    </ul>
+  </div>
+
+  <script>
+    const burgerBtn = document.querySelector(".burgermenubutton");
+    const burgerMenu = document.querySelector(".burger-menu");
+
+    burgerBtn.addEventListener("click", () => {
+      burgerMenu.classList.toggle("show");
+    });
+  </script>
+</header>
+
+<main>
+    <div class="wrapper">
+        <div class="inner" style="--quantity: 10;">
+
+            <div class="card" style="--index: 0;">
+                <div class="img" style="background-image: url(img/480707499_971939028363962_5591143301584070460_n.jpg)"></div>
+            </div>
+            <div class="card" style="--index: 1;">
+                <div class="img" style="background-image: url(img/480719374_971938641697334_3260436232770977854_n.jpg)"></div>
+            </div>
+            <div class="card" style="--index: 2;">
+                <div class="img" style="background-image: url(img/sergepppp.jpg)"></div>
+            </div>
+            <div class="card" style="--index: 3;">
+                <div class="img" style="background-image: url(img/b3be33cd-acef-4c4c-8ed7-5d1db5f9fc6d.jpg)"></div>
+            </div>
+            <div class="card" style="--index: 4;">
+                <div class="img" style="background-image: url(img/bcc3dc0c-b08c-4313-a587-8868deef6e90-copy-0.jpg)"></div>
+            </div>
+            <div class="card" style="--index: 5;">
+                <div class="img" style="background-image: url(img/de78ff78-1803-4b3a-9ea2-720ffa39ba72.jpg)"></div>
+            </div>
+            <div class="card" style="--index: 6;">
+                <div class="img" style="background-image: url(img/)"></div>
+            </div>
+            <div class="card" style="--index: 7;">
+                <div class="img" style="background-image: url(https://placehold.co/300x400/e74c3c/ffffff?text=Photo+8+|+Stand)"></div>
+            </div>
+            <div class="card" style="--index: 8;">
+                <div class="img" style="background-image: url(https://placehold.co/300x400/1abc9c/ffffff?text=Photo+9+|+DJ)"></div>
+            </div>
+            <div class="card" style="--index: 9;">
+                <div class="img" style="background-image: url(https://placehold.co/300x400/7f8c8d/ffffff?text=Photo+10+|+After)"></div>
+            </div>
+        </div>
+    </div>
+</main>
+</body>
+</html>

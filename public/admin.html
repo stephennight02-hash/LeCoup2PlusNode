@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administration des Places</title>
+    <link rel="stylesheet" href="admin.css"> 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+
+        .admin-main { flex-direction: column; align-items: center; }
+        .admin-controls { margin-bottom: 25px; padding: 20px; background: #34495e; border-radius: 10px; width: 100%; max-width: 600px; text-align: center; }
+        .admin-seats-container { max-width: 600px; margin-top: 20px; }
+
+        .seat { cursor: pointer; } 
+        .seat:hover { opacity: 0.8; transform: scale(1.05); }
+    </style>
+</head>
+
+
+<body>
+
+<main class="content admin-main">
+    <h1>Administration des Réservations</h1>
+    
+    <section class="admin-controls">
+        <h2>Sélection du Jour</h2>
+        <div class="choix-jour jours-container" id="admin-day-selector" style="flex-direction: row; gap: 15px; justify-content: center; margin-top: 15px;">
+            <button class="jour-btn" data-day="ven">Vendredi</button>
+            <button class="jour-btn" data-day="sam">Samedi</button>
+            <button class="jour-btn" data-day="dim">Dimanche</button>
+        </div>
+
+        <h3 id="current-admin-day" style="margin-top: 20px; color: #ff4500;">Jour sélectionné: Vendredi</h3>
+    </section>
+
+
+<section class="admin-controls">
+        <h2>Actions</h2>
+        <button id="save-btn" class="jour-btn" style="background: #e67e22; margin-top: 10px; width: 200px;">
+            <i class="fas fa-save"></i> Sauvegarder l'État
+        </button>
+        
+        <p id="message-area" style="margin-top: 15px; font-weight: bold; min-height: 20px;">
+
+        </p>
+    </section>
+
+
+    <section class="reservation admin-seats-container">
+        <div class="scene">Cliquez sur une place pour changer son état</div> 
+        
+        <div class="seats" id="seats-container">
+            <div style="color:white;">Chargement de l'interface Admin...</div>
+        </div>
+        
+        <div class="legend" style="margin-top: 30px;">
+            <p><span><span class="circle" style="background:#30af34;"></span> Libre</span>
+               <span><span class="circle" style="background:#575757;"></span> Réservée</span></p>
+        </div>
+    </section>
+</main>
+
+<script src="admin.js"></script>
+
+</body>
+</html>

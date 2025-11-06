@@ -6,7 +6,7 @@
   <title>LeCoup2Plus</title>
   <link rel="stylesheet" href="index.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-  <link rel="icon" type="icon" href="img/img/logo.png" sizes="96x96" />
+  <link rel="icon" type="icon" href="img/logo123.png" sizes="96x96" />
   <script src="https://cdn.tailwindcss.com"></script>
   <meta property="og:type" content="website" />
   <meta content="summary_large_image" name="twitter:card" />
@@ -22,7 +22,7 @@
       <li><a href="index.html">Accueil</a></li>
       <li><a href="info.html">Informations</a></li>
       <li><a href="galerie.html">Galerie</a></li>
-      <li><a href="boutiqueven.html">Réservation</a></li>
+      <li><a href="reservation.html">Réservation</a></li>
     </ul>
     <div class="buttons">
       <div id="user-info" style="display: none; align-items: center; gap: 10px; margin-left: 20px;">
@@ -31,7 +31,6 @@
       </div>
     </div>
 
-    <!-- ✅ Nouveau bouton menu personnalisé -->
     <div class="burgermenubutton" style="cursor: pointer;">
       <img src="img/menu.png" alt="Menu" style="width: 30px; height: 30px;">
     </div>
@@ -42,7 +41,7 @@
       <li><a href="index.html">Accueil</a></li>
       <li><a href="info.html">Informations</a></li>
       <li><a href="galerie.html">Galerie</a></li>
-      <li><a href="boutiqueven.html">Réservation</a></li>
+      <li><a href="reservation.html">Réservation</a></li>
       <div class="divider"></div>
       <div class="buttons-burger-menu"></div>
     </ul>
@@ -62,11 +61,11 @@
 <div class="flexcontact">
   <div class="contact">
     Contactez-nous :
-    N° de Mauro : <strong>0476777961</strong> <br>
+    N° de Mauro : <strong><a href="tel:+32476777961">0476777961</a></strong> <br>
     Ou
-    N° de Guy : <strong>0473657393</strong> <br>
+    N° de Guy : <strong><a href="tel:+32473657393">0473657393</a></strong> <br>
     <br>
-    Pour voir les places disponibles <br>  <a href="boutiqueven.html" class="lienici">Appuyer ici </a>
+    Pour voir les places disponibles <br>  <a href="reservation.html" class="lienici">Appuyer ici </a>
   </div>
 
 </div>
@@ -76,6 +75,7 @@
     <h2 class="section-title upcoming-plays">Prochainement à l'Affiche !</h2>
     <div class="cards-container no-mq">
 
+      
     </div>
 
     <hr class="section-divider">
@@ -85,38 +85,33 @@
         <div class="card">
             <img src="img/480422820_973107424913789_2753693632749284354_n.jpg" alt="Affiche de la pièce : Le Bourgeois Gentilhomme">
             <div class="card__content">
-                <h3 class="card__title">Toc Toc</h3>
             </div>
         </div>
         <div class="card">
             <img src="img/2000_678f5719952c1.webp" alt="Affiche de la pièce : Antigone">
             <div class="card__content">
-                <h3 class="card__title">Sexe et Jalousie</h3>
             </div>
         </div>
         <div class="card">
             <img src="img/481006759_975541278003737_4891812951105816998_n.jpg" alt="Affiche de la pièce : L'importance d'être Constant">
             <div class="card__content">
-                <h3 class="card__title">Funny Money</h3>
             </div>
         </div>
         <div class="card">
             <img src="img/686899442_964464535778078_8855760468917757877_n.jpg" alt="Affiche de la pièce : J'aime Beaucoup ce que vous Faites">
             <div class="card__content">
-                <h3 class="card__title">J'aime Beaucoup ce que vous Faites</h3>
             </div>
         </div>
-              <div class="card">
+                <div class="card">
             <img src="img/92aed24e-9943-4550-a0ff-b0d0ac3d7be5.jpg" alt="Affiche de la pièce à venir">
             <div class="card__content">
-                <h3 class="card__title">Le gai mariage</h3>
             </div>
         </div>
     </div>
 </div>
 
 
-<!-- Exemple bouton admin -->
+
 <div class="admin-button" onclick="accessAdmin()" style="cursor: pointer;">
   <img src="img/utilisateur.png" alt="Admin">
 </div>
@@ -126,10 +121,8 @@
   const password = prompt("🔑 Entrez le mot de passe pour accéder à l'administration :");
 
   if (password === "lc2p123") {
-    // Mot de passe correct → redirige vers la page admin
-    window.location.href = "adminven.html";
+    window.location.href = "admin.html";
   } else if (password !== null) {
-    // Mot de passe incorrect (et pas annulé)
     alert("❌ Mot de passe incorrect !");
   }
 }
