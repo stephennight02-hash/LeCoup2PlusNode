@@ -36,7 +36,7 @@
 <body class="min-h-screen flex flex-col items-center justify-center p-4">
 
     <!-- Conteneur Principal du Chat -->
-    <div class="w-full max-w-2xl bg-gray-100 rounded-xl shadow-2xl p-6 flex flex-col h-[80vh]">
+    <div id="chat-container" class="w-full max-w-2xl bg-gray-100 rounded-xl shadow-2xl p-6 flex flex-col h-[80vh]">
         <h1 class="text-3xl font-bold text-gray-800 mb-6 text-center">
             🎭 Assistant Spectateur
         </h1>
@@ -115,9 +115,9 @@
 
 
     /**
-     * Tente de récupérer la base de connaissances depuis Firestore.
-     * Si elle n'existe pas, elle l'initialise avec les données par défaut.
-     */
+      * Tente de récupérer la base de connaissances depuis Firestore.
+      * Si elle n'existe pas, elle l'initialise avec les données par défaut.
+      */
     async function loadKnowledgeBase() {
         // Chemin public: /artifacts/{appId}/public/data/knowledge/pratique
         const knowledgeDocRef = firebase.doc(db, `/artifacts/${appId}/public/data/knowledge`, 'pratique');
@@ -149,8 +149,8 @@
 
 
     /**
-     * Initialise Firebase et le Chat Assistant.
-     */
+      * Initialise Firebase et le Chat Assistant.
+      */
     async function initializeAppAndChat() {
         if (!firebaseConfig) {
              console.error("Configuration Firebase non disponible.");
@@ -175,6 +175,7 @@
             }
             
             // 2. Chargement de la Base de Connaissances
+            loadingIndicator.classList.remove('hidden');
             knowledgeBase = await loadKnowledgeBase();
 
             if (knowledgeBase) {
@@ -224,15 +225,17 @@
     }
 
     function formatText(text) {
+        // Simple conversion des sauts de ligne
         return text.replace(/\n/g, '<br>');
     }
 
     // ----------------------------------------------------------------
-    // 5. GESTION DE L'ENVOI DU MESSAGE ET APPEL API
+    // 5. GESTION DE L'ENVOI DU MESSAGE ET APPEL API (Directement à Gemini)
     // ----------------------------------------------------------------
 
     // API Gemini Configuration
     const API_MODEL = 'gemini-2.5-flash-preview-09-2025';
+    // L'apiKey est fournie par l'environnement Canvas
     const apiKey = ""; 
     const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/${API_MODEL}:generateContent?key=${apiKey}`;
     
