@@ -16,7 +16,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <style>
-        /* Configuration Tailwind et Variables de base */
         :root {
             --primary-blue: #5b98eb;
             --menu-primary: #3b82f6; 
@@ -24,9 +23,7 @@
             --ai-bubble-bg: #ffffff; 
         }
 
-        /* --- VOS STYLES (GLOBAL RESETS & NAVBAR) --- */
         
-        /* GLOBAL RESETS */
         html { box-sizing: border-box; }
         *,
         *:before,
@@ -35,13 +32,12 @@
             margin: 0;
             padding: 0;
             font-family: 'Poppins', sans-serif;
-            line-height: 1.6; /* Améliore la lisibilité */
+            line-height: 1.6;
         }
 
         body {
             font-size: 21px;
             color: #ffffff;
-            /* FOND D'ÉCRAN : Remplacé par une URL de placeholder esthétique */
             background-image: url(img/photo-1514306191717-452ec28c7814.jpg); 
             background-attachment: fixed; 
             background-position: center;
@@ -116,7 +112,7 @@
         }
         
         .burgermenubutton img {
-            display: none; /* Masqué */
+            display: block;
         }
         .burgermenubutton i {
             display: block;
@@ -144,7 +140,7 @@
         .burger-menu a {
             color: white;
             text-decoration: none;
-            font-size: 1.1rem; /* Ajusté pour le mobile */
+            font-size: 1.1rem;
         }
 
         .burger-menu .divider {
@@ -202,10 +198,16 @@
             }
         }
 
-        /* Styles de la carte Infos Pratiques (Côté Gauche) */
         .info-box {
             background: rgba(255, 255, 255, 0.9);
-            border-radius: 1rem; padding: 2rem; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5); width: 100%; max-width: 400px; text-align: center; border-top: 5px solid var(--primary-blue); transition: transform 0.3s ease;
+            border-radius: 1rem; 
+            padding: 2rem; 
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5); 
+            width: 100%; 
+            max-width: 400px; 
+            text-align: center; 
+            border-top: 5px solid var(--primary-blue); 
+            transition: transform 0.3s ease;
             color: #1a1a1a;
         }
         .info-box h3 { font-size: 1.5rem; font-weight: 700; color: #1a1a1a; margin-bottom: 1.5rem; }
@@ -224,7 +226,6 @@
             justify-content: flex-start; 
             margin-bottom: 0.75rem; 
         }
-        /* Correction : Ajout d'espace entre l'icône SVG et le texte dans les liens */
         .info-box a svg { 
             margin-right: 0.75rem; 
             flex-shrink: 0;
@@ -236,48 +237,53 @@
 <body>
 
 <header>
-    <div class="navbar">
-        <div class="logo">
-            <a href="#">LeCoup2Plus</a>
-        </div>
-        <ul class="links">
-            <li><a href="index.html">Accueil</a></li>
-            <li><a href="info.html">Informations</a></li>
-            <li><a href="galerie.html">Galerie</a></li>
-            <li><a href="reservation.html">Réservation</a></li>
-        </ul>
-        <div class="buttons">
-            <div id="user-info" style="display: none; align-items: center; gap: 10px; margin-left: 20px;">
-                <img id="user-photo" src="https://placehold.co/40x40/5b98eb/ffffff?text=U" alt="Photo de profil" style="width: 40px; height: 40px; border-radius: 50%;">
-                <span id="user-name" style="color: white; font-weight: bold;"></span>
-            </div>
-        </div>
+  <div class="navbar">
+    <div class="logo">
+      <a href="#">LeCoup2Plus</a>
+    </div>
+    <ul class="links">
+      <li><a href="index.html">Accueil</a></li>
+      <li><a href="info.html">Informations</a></li>
+      <li><a href="galerie.html">Galerie</a></li>
+      <li><a href="reservation.html">Réservation</a></li>
+    </ul>
+    <div class="buttons">
+      <div id="user-info" style="display: none; align-items: center; gap: 10px; margin-left: 20px;">
+        <img id="user-photo" src="" alt="Photo de profil" style="width: 40px; height: 40px; border-radius: 50%;">
+        <span id="user-name" style="color: white; font-weight: bold;"></span>
+      </div>
+    </div>
 
-            <div class="burgermenubutton" style="cursor: pointer;">
+    <div class="burgermenubutton" style="cursor: pointer;">
       <img src="img/menu.png" alt="Menu" style="width: 30px; height: 30px;">
     </div>
-    
-    </div>
+  </div>
 
-    <div class="burger-menu" id="mobile-menu-content">
-        <ul class="links">
-            <li><a href="index.html">Accueil</a></li>
-            <li><a href="info.html">Informations</a></li>
-            <li><a href="galerie.html">Galerie</a></li>
-            <li><a href="reservation.html">Réservation</a></li>
-            <li><a href="info_assistant.html">Chat Bot</a></li>
-            <div class="divider"></div>
-            <div class="buttons-burger-menu"></div>
-        </ul>
-    </div>
+  <div class="burger-menu">
+    <ul class="links">
+      <li><a href="index.html">Accueil</a></li>
+      <li><a href="info.html">Informations</a></li>
+      <li><a href="galerie.html">Galerie</a></li>
+      <li><a href="reservation.html">Réservation</a></li>
+      <div class="divider"></div>
+      <div class="buttons-burger-menu"></div>
+    </ul>
+  </div>
+
+  <script>
+    const burgerBtn = document.querySelector(".burgermenubutton");
+    const burgerMenu = document.querySelector(".burger-menu");
+
+    burgerBtn.addEventListener("click", () => {
+      burgerMenu.classList.toggle("show");
+    });
+  </script>
 </header>
 
 <main class="content-container">
     <div class="main-content-flex">
-        <!-- Colonne 1 : Infos Pratiques (Icônes SVG) -->
         <div class="info-box">
             <div class="icon">
-                <!-- ICÔNE PRINCIPALE "INFO" EN SVG -->
                 <svg class="h-10 w-10 text-red-500 mx-auto" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path fill-rule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12Zm8.706-1.444c1.192-.582 2.917.348 3.51 1.968a.75.75 0 0 0 1.5-.538c-.347-1.127-.406-1.57-.424-1.666a.75.75 0 0 0-.256-.475 1.5 1.5 0 0 0-.583-.35l-.487-.13-.42-.116c-.752-.206-1.46-.516-2.072-.943C9.76 8.356 9 7.7 9 7.5a.75.75 0 0 1 1.5 0c0 .126.398.531 1.05.856.574.282 1.25.467 1.948.513a.75.75 0 0 0 .147-1.492.75.75 0 0 0-.147 1.492c-.394-.027-.8-.113-1.21-.258a3.166 3.166 0 0 1-1.458-.933.75.75 0 0 0-1.077-.074.75.75 0 0 0-.074 1.077ZM12 15.75a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Z" clip-rule="evenodd" />
                 </svg>
@@ -285,7 +291,6 @@
             <div class="text">
                 <h3>Contact & Réseaux</h3>
                 <p>
-                    <!-- ICÔNE WHATSAPP EN SVG -->
                     <a href="https://api.whatsapp.com/send?phone=%2B32476777961" target="_blank" rel="noopener noreferrer">
                         <svg class="h-6 w-6 text-green-500" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                             <path d="M12.04 2c-5.46 0-9.84 4.38-9.84 9.84 0 1.83.504 3.56 1.378 5.094L2 22l5.244-1.378a9.814 9.814 0 005.616 1.404c5.46 0 9.84-4.38 9.84-9.84S17.5 2 12.04 2zM17.152 15.652c-.174.29-.49.52-.806.626-.29.09-1.5.096-2.586-.288-.6-.204-1.512-.558-2.61-.954-2.724-1.002-4.524-3.768-4.6-3.882-.072-.114-.594-.744-.594-1.35 0-.612.306-.918.42-.96.096-.036.21-.06.468-.06.216 0 .49.006.696.006.24 0 .336.072.378.168.144.348.48 1.152.516 1.224.036.084.06.192.012.312-.048.12-.306.474-.396.564-.09.09-.174.198-.096.342.078.144.348.6.762.96.414.36 2.454 1.584 2.922 1.8.468.216.786.312 1.062.372.486.096.936.036 1.284-.216.348-.252.594-.588.756-.84.168-.252.288-.21.468-.15.192.06.996.474 1.164.558.174.09.288.132.336.204.048.072.048.438-.24 1.056z" />
@@ -293,7 +298,6 @@
                         <span>Whatsapp</span>
                     </a>
                     
-                    <!-- ICÔNE EMAIL EN SVG -->
                     <a href="mailto:lecoup2plus@outlook.fr">
                         <svg class="h-6 w-6 text-blue-400" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                             <path d="M2.003 5.884l8.997 5.765 8.997-5.765C18.426 4.364 16.51 4 12 4s-6.426.364-7.997 1.884zm0 2.223V16.5c0 1.38 1.12 2.5 2.5 2.5h15c1.38 0 2.5-1.12 2.5-2.5V8.107l-9.584 6.138c-.334.214-.738.318-1.139.318-.401 0-.805-.104-1.139-.318L2.003 8.107z" />
@@ -301,7 +305,6 @@
                         <span>lecoup2plus@outlook.fr</span>
                     </a>
                     
-                    <!-- ICÔNE FACEBOOK EN SVG -->
                     <a href="https://www.facebook.com/profile.php?id=100066436214728&sk=reviews&locale=fr_FR" target="_blank" rel="noopener noreferrer">
                         <svg class="h-6 w-6 text-blue-600" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                             <path d="M14 13.5h2.5L17 9h-3v-2c0-1.03.62-1.63 1.57-1.63.38 0 .8.04.99.07v-2.19C16.14 2.45 15.22 2 13.6 2c-3.15 0-4.63 1.57-4.63 4.4v2.1h-3V9h3v4.5H9v8h4v-8h1z"/>
