@@ -392,10 +392,28 @@ header {
     </div>
 
     <!-- ✅ Zone d’entrée + micro -->
-    <div style="display:flex; gap:10px; align-items:center;">
-        <input type="text" id="user-input" placeholder="Écrivez votre message ici..."
-        style="flex:1; padding:0.75rem; border:1px solid #ccc; border-radius:0.5rem;">
+<div style="
+    display:flex; 
+    gap:10px; 
+    align-items:center; 
+    width:100%;               /* ✅ Nouveau */
+    max-width:100%;           /* ✅ Nouveau */
+    box-sizing:border-box;    /* ✅ Nouveau */
+">
+    <input type="text" 
+        id="user-input" 
+        placeholder="Écrivez votre message ici..."
+        style="
+            flex:1; 
+            padding:0.75rem; 
+            border:1px solid #ccc; 
+            border-radius:0.5rem;
+            width:100%;        /* ✅ IMPORTANT */
+            max-width:100%;    /* ✅ EMPÊCHE tout débordement */
+            box-sizing:border-box;
+        ">
 </div>
+
 
 <!-- ✅ Animations -->
 <style>
