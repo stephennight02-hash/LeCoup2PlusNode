@@ -8,7 +8,7 @@ const app = express();
 const path = require("path");
 
 // ==== CHATBOT ====
-const { getChatbotResponse } = require("./chatbot");
+const { getChatbotResponse } = require('./data/chatbotData.json')
 
 // Configuration
 const PORT = process.env.PORT || 3000;
