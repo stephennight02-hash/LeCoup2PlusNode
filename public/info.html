@@ -315,5 +315,263 @@
             </div>
         </div>
 
+
+        <!-- ✅ CHATBOT - Ajouté sans modifier ton style existant -->
+<div class="chatbot-box" style="
+    background: rgba(255,255,255,0.95);
+    border-radius: 1rem;
+    padding: 1.5rem;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+    width: 100%;
+    max-width: 500px;
+    color: #1a1a1a;
+    animation: fadeIn 0.7s ease-in-out;
+">
+
+    <h3 style="font-size: 1.4rem;
+               font-weight: 700;
+               color: var(--primary-blue);
+               margin-bottom: 1rem;">
+        Chat d'informations
+    </h3>
+
+    <!-- ✅ Fenêtre du chat -->
+    <div id="chat-window" style="
+        height: 280px;
+        overflow-y: auto;
+        border: 1px solid #ccc;
+        border-radius: 0.5rem;
+        padding: 1rem;
+        background-color: #fafafa;
+        margin-bottom: 1rem;
+        text-align: left;
+    ">
+        <div class="bot-msg" style="margin-bottom: 1rem;">
+            <span style="background:#eaeaea; padding:8px 12px; border-radius: 10px;">
+                Bonjour 😊 Je suis l’assistant du Coup2Plus ! Comment puis-je vous aider ?
+            </span>
+        </div>
+    </div>
+
+    <!-- ✅ Suggestions -->
+    <div id="suggestions" style="display:flex; flex-wrap:wrap; gap:8px; margin-bottom:1rem;">
+        <button class="suggest-btn">Où se trouve la salle ?</button>
+        <button class="suggest-btn">Y a-t-il un parking ?</button>
+        <button class="suggest-btn">PMR / accessibilité</button>
+        <button class="suggest-btn">Boissons et collations</button>
+        <button class="suggest-btn">Comment réserver ?</button>
+    </div>
+
+    <!-- ✅ Zone d’entrée + micro -->
+    <div style="display:flex; gap:10px; align-items:center;">
+        <input type="text" id="user-input" placeholder="Écrivez votre message ici..."
+        style="flex:1; padding:0.75rem; border:1px solid #ccc; border-radius:0.5rem;">
+        
+        <!-- ✅ Bouton micro -->
+        <button id="mic-btn" style="
+            padding:0.7rem 0.9rem;
+            background: var(--primary-blue);
+            border:none;
+            border-radius:50%;
+            color:white;
+            cursor:pointer;
+            transition:0.2s;
+        ">🎤</button>
+    </div>
+</div>
+
+<!-- ✅ Animations -->
+<style>
+@keyframes fadeIn {
+    from { opacity:0; transform: translateY(10px); }
+    to { opacity:1; transform: translateY(0); }
+}
+
+.suggest-btn {
+    padding: 6px 12px;
+    background: #eaeaea;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    transition: 0.2s;
+    font-size: 0.9rem;
+}
+
+.suggest-btn:hover {
+    background: var(--primary-blue);
+    color: white;
+}
+</style>
+
+
+
+<script>
+const chatWindow = document.getElementById('chat-window');
+const userInput = document.getElementById('user-input');
+const micBtn = document.getElementById('mic-btn');
+
+// ✅ Base de données de réponses
+const responses = {
+    // --- DURÉE ET HORAIRES ---
+    "heure debut": "Le spectacle commence à 20h00, et à 16h le Dimanche. Veuillez arriver 15 minutes en avance pour prendre place.",
+    "commence": "Le spectacle commence à 20h00. Veuillez arriver 15 minutes en avance pour prendre place.",
+    "horaire": "Le spectacle commence à 20h00. Sauf les Dimanche où le spectacle débute à 16h",
+    "fin": "La pièce se termine aux alentours de 21h30. Sauf les Dimanche où le spectacle débute à 16h.",
+    "spectacle": "Le spectacle commence à 20h00. Sauf les Dimanche où le spectacle débute à 16h",
+
+    // --- ACCESSOIRES ET INTERDITS ---
+    "photo": "Les photos et vidéos sont autorisés sans flash, pour ne pas déranger les acteurs.",
+    "filmer": "Les photos et vidéos sont autorisés sans flash, pour ne pas déranger les acteurs.",
+    "portable": "Nous demandons de mettre les téléphones portables en mode silencieux (ou éteints) durant le spectacle.",
+
+    // --- TARIFS ET RÉDUCTIONS ---
+    "tarif": "Le prix du billet est de 15€ en prévente et 18€ sur place (sous réserve de places disponibles).",
+    "reduction": "Nous proposons un tarif réduit à 12€ pour les étudiants et les seniors (+65 ans) sur présentation d'une preuve.",
+    "etudiant": "Nous proposons un tarif réduit à 12€ pour les étudiants.",
+    "senior": "Nous proposons un tarif réduit à 12€ pour les seniors (+65 ans).",
+    "groupe": "Pour toute réservation de 10 personnes ou plus, veuillez nous contacter directement par email pour un tarif de groupe.",
+    "paiement": "Le paiement se fait en ligne lors de la réservation. Sur place, nous acceptons le cash et les cartes.",
+
+    // --- 🅿️ PARKING / STATIONNEMENT ---
+    "parking": "Oui, il y a un parking juste devant le centre culturel. Trouver une place ne pose généralement aucun souci.",
+    "stationnement":"Oui, il y a un parking juste devant le centre culturel.",
+    "se garer":"Oui, il y a un parking juste devant le centre culturel. Trouver une place ne pose généralement aucun souci.",
+    "place voiture":"Oui, il y a un parking juste devant le centre culturel.",
+    "où se garer":"Oui, il y a un parking juste devant le centre culturel.",
+    "véhicule":"Oui, il y a un parking juste devant le centre culturel.",
+    "places":"Oui, il y a un parking juste devant le centre culturel.",
+    "gratuit":"Le parking est gratuit et juste devant l'entrée.",
+
+    // --- 📍 LOCALISATION / ADRESSE ---
+    "localisation": "Le spectacle se déroule au Centre Culturel de Philippeville — Rue de France 1, 5600 Philippeville.",
+    "adresse":"Le spectacle se déroule au Centre Culturel de Philippeville — Rue de France 1, 5600 Philippeville.",
+    "où":"Le spectacle se déroule au Centre Culturel de Philippeville — Rue de France 1, 5600 Philippeville.",
+    "lieu":"Le spectacle se déroule au Centre Culturel de Philippeville — Rue de France 1, 5600 Philippeville.",
+    "s'y rendre":"Le spectacle se déroule au Centre Culturel de Philippeville — Rue de France 1, 5600 Philippeville.",
+    "itinéraire":"Le spectacle se déroule au Centre Culturel de Philippeville — Rue de France 1, 5600 Philippeville.",
+    "comment venir":"Le spectacle se déroule au Centre Culturel de Philippeville — Rue de France 1, 5600 Philippeville.",
+    "ville":"Le centre culturel est situé à Philippeville.",
+
+    // --- 🚻 TOILETTES / WC ---
+    "toilette":"Des toilettes pour hommes, femmes et PMR sont disponibles sur place.",
+    "wc":"Des toilettes pour hommes, femmes et PMR sont disponibles.",
+    "toilettes":"Des toilettes pour hommes, femmes et PMR sont disponibles sur place.",
+    "salle de bain":"Des toilettes pour hommes, femmes et PMR sont disponibles.",
+    "besoin":"Des toilettes pour hommes, femmes et PMR sont disponibles.",
+    "pipi":"Des toilettes pour hommes, femmes et PMR sont disponibles.",
+    "où sont les toilettes":"Des toilettes pour hommes, femmes et PMR sont disponibles sur place.",
+
+    // --- ♿ ACCESSIBILITÉ PMR / HANDICAP ---
+    "pmr":"Oui, la salle est entièrement accessible aux personnes à mobilité réduite.",
+    "handicap":"Oui, la salle est accessible PMR.",
+    "mobilité réduite":"Oui, la salle est entièrement accessible aux personnes à mobilité réduite.",
+    "fauteuil roulant":"Oui, la salle est accessible PMR. L'accès et les sièges sont prévus.",
+    "accessible":"Oui, la salle est entièrement accessible aux personnes à mobilité réduite.",
+    "rampe":"Oui, il y a des rampes d'accès si nécessaire et la salle est de plain-pied.",
+
+    // --- 🍿 BOISSONS / COLLATIONS ---
+    "boisson":"Nous proposons des boissons ainsi qu'une planche de fromages et saucissons durant l'entracte et après la pièce.",
+    "collation":"Nous proposons une planche de fromages et saucissons durant l'entracte.",
+    "manger":"Nous proposons une planche de fromages et saucissons durant l'entracte.",
+    "boire":"Nous proposons des boissons (softs, bières, vins) ainsi qu'une planche de fromages et saucissons durant 'entracte et après la pièce.",
+    "entracte":"Nous proposons des boissons et une planche de fromages et saucissons durant 'entracte.",
+    "nourriture":"Nous proposons une planche de fromages et saucissons durant l'entracte.",
+    "snack":"Nous proposons une planche de fromages et saucissons durant l'entracte.",
+    "bar":"Le bar est ouvert durant l'entracte et après le spectacle.",
+    "paiement bar":"Le paiement au bar peut se faire en espèces ou par carte.",
+
+    // --- 🎟️ RÉSERVATION ---
+    "réservation":"Les réservations se font directement via la page 'Réservation' du site.",
+    "reserver":"Vous pouvez réserver vos places via la page Réservation.",
+    "acheter":"Les réservations se font directement via la page 'Réservation' du site.",
+    "billet":"Vous pouvez réserver vos places via la page Réservation.",
+    "ticket":"Les réservations se font directement via la page 'Réservation' du site.",
+    "place à acheter":"Vous pouvez réserver vos places via la page Réservation.",
+    "prendre place":"Vous pouvez réserver vos places via la page Réservation.",
+    "vente":"La vente des billets se fait en ligne sur la page Réservation.",
+    "en ligne":"Les réservations se font en ligne via la page dédiée.",
+
+    // --- 📞 CONTACT ---
+    "contact":"Vous pouvez nous joindre via WhatsApp au +32 476 77 79 61 ou par email : lecoup2plus@outlook.fr.",
+    "numéro":"Vous pouvez nous joindre via WhatsApp au +32 476 77 79 61 (pour urgences et informations) ou par email : lecoup2plus@outlook.fr.",
+    "téléphoner":"Pour toute question non urgente, veuillez privilégier l'email ou WhatsApp : lecoup2plus@outlook.fr.",
+    "joindre":"Vous pouvez nous joindre via WhatsApp au +32 476 77 79 61 ou par email : lecoup2plus@outlook.fr.",
+    "mail":"Notre adresse email est lecoup2plus@outlook.fr.",
+    "whatsapp":"Vous pouvez nous joindre via WhatsApp au +32 476 77 79 61.",
+    "coordonnées":"Vous pouvez nous joindre via WhatsApp au +32 476 77 79 61 ou par email : lecoup2plus@outlook.fr.",
+};
+
+// ✅ Suggestions automatiques
+document.querySelectorAll(".suggest-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+        const text = btn.textContent;
+        sendMessage(text);
+    });
+});
+
+// ✅ Fonction d’envoi
+function sendMessage(text) {
+    appendMessage("user", text);
+
+    setTimeout(() => {
+        appendMessage("bot", getResponse(text.toLowerCase()));
+    }, 400);
+}
+
+// ✅ Ajout message dans la fenêtre
+function appendMessage(sender, text) {
+    const div = document.createElement("div");
+    div.classList.add(sender === "user" ? "user-msg" : "bot-msg");
+    div.style.marginBottom = "10px";
+
+    div.innerHTML = `<span style="
+        background:${sender === 'user' ? 'var(--user-bubble)' : '#eaeaea'};
+        padding:8px 12px;
+        border-radius:10px;
+        color:${sender === 'user' ? '#fff' : '#000'};
+        display:inline-block;
+    ">${text}</span>`;
+
+    chatWindow.appendChild(div);
+    chatWindow.scrollTop = chatWindow.scrollHeight;
+}
+
+// ✅ Réponse intelligente
+function getResponse(input) {
+    for (let key in responses) {
+        if (input.includes(key)) return responses[key];
+    }
+    return "Je suis désolé, je n'ai pas parfaitement compris votre demande. Pourriez-vous reformuler ?";
+}
+
+// ✅ Envoi au clavier
+userInput.addEventListener("keypress", e => {
+    if (e.key === "Enter" && userInput.value.trim() !== "") {
+        sendMessage(userInput.value.trim());
+        userInput.value = "";
+    }
+});
+
+// ✅ Reconnaissance vocale (micro bouton)
+micBtn.addEventListener("click", () => {
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (!SpeechRecognition) {
+        alert("La reconnaissance vocale n’est pas supportée sur votre appareil.");
+        return;
+    }
+
+    const recognition = new SpeechRecognition();
+    recognition.lang = "fr-FR";
+    recognition.start();
+
+    recognition.onresult = e => {
+        const text = e.results[0][0].transcript;
+        userInput.value = text;
+        sendMessage(text);
+    };
+});
+</script>
+
+
 </body>
 </html>

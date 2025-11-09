@@ -5,6 +5,10 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const app = express();
+const path = require("path");
+
+// ==== CHATBOT ====
+const { getChatbotResponse } = require("./chatbot");
 
 // Configuration
 const PORT = process.env.PORT || 3000;
@@ -120,6 +124,23 @@ async function saveSeats(req, res, dayLabel, dayKey) {
 app.post('/api/save-seats-ven', (req, res) => saveSeats(req, res, "Vendredi", 'ven'));
 app.post('/api/save-seats-sam', (req, res) => saveSeats(req, res, "Samedi", 'sam'));
 app.post('/api/save-seats-dim', (req, res) => saveSeats(req, res, "Dimanche", 'dim'));
+
+
+// =========================
+// 🤖 CHATBOT API (NOUVEAU)
+// =========================
+
+app.post("/api/chatbot", (req, res) => {
+    const msg = req.body.message;
+
+    if (!msg) {
+        return res.status(400).json({ reply: "Message manquant." });
+    }
+
+    const reply = getChatbotResponse(msg);
+    res.json({ reply });
+});
+
 
 // =========================
 // 🚀 Lancement de l'application
