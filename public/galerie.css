@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Poetsen+One&family=Poppins:wght@400;600;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Poetsen+One&family=Poppins:wght@400;600;700&display=swap");
 
 /* GLOBAL RESETS */
 html {
@@ -10,7 +10,7 @@ html {
   box-sizing: inherit;
   margin: 0;
   padding: 0;
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
 }
 
 body {
@@ -25,9 +25,9 @@ body {
 }
 
 @media (max-width: 768px) {
-    body {
-      margin-top: 50px;
-    }
+  body {
+    margin-top: 50px;
+  }
 }
 
 /* NAVBAR */
@@ -154,79 +154,84 @@ header {
   }
 }
 
-
 .wrapper {
-    width: 100%;
-    height: calc(100vh - 80px);
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-    background-color: transparent;
+  width: 100%;
+  height: calc(100vh - 80px);
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background-color: transparent;
 }
 
 .inner {
+  --w: 250px;
+  --h: 380px;
+  --translateZ: 380px;
+  --rotateX: -15deg;
+  --perspective: 1000px;
 
-    --w: 250px; 
-    --h: 380px; 
-    --translateZ: 380px; 
-    --rotateX: -15deg;
-    --perspective: 1000px;
-
-    position: absolute;
-    width: var(--w);
-    height: var(--h);
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) perspective(var(--perspective));
-    z-index: 2;
-    transform-style: preserve-3d;
-    animation: rotating 25s linear infinite; 
+  position: absolute;
+  width: var(--w);
+  height: var(--h);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) perspective(var(--perspective));
+  z-index: 2;
+  transform-style: preserve-3d;
+  animation: rotating 25s linear infinite;
 }
 
 @media (max-width: 768px) {
-    .inner {
+  @media (max-width: 768px) {
+    /* Média requête pour les téléphones et petits écrans */
 
-        --w: 180px; 
-        --h: 280px; 
-        --translateZ: 280px; 
+    .inner {
+      --w: 180px;
+      --h: 280px;
+      --translateZ: 280px;
+      top: 30%;
+      transform: translate(-50%, -50%) perspective(var(--perspective));
     }
+  }
 }
 
 @keyframes rotating {
-    from {
-        transform: translate(-50%, -50%) perspective(var(--perspective)) rotateX(var(--rotateX)) rotateY(0);
-    }
-    to {
-        transform: translate(-50%, -50%) perspective(var(--perspective)) rotateX(var(--rotateX)) rotateY(1turn);
-    }
+  from {
+    transform: translate(-50%, -50%) perspective(var(--perspective))
+      rotateX(var(--rotateX)) rotateY(0);
+  }
+  to {
+    transform: translate(-50%, -50%) perspective(var(--perspective))
+      rotateX(var(--rotateX)) rotateY(1turn);
+  }
 }
 
 .card {
-    position: absolute;
-    border: 3px solid rgba(255, 255, 255, 0.4);
-    border-radius: 12px;
-    overflow: hidden;
-    inset: 0;
-    transition: transform 0.5s;
-    background: linear-gradient(145deg, #34495e, #2c3e50); 
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-    
-    transform: rotateY(calc((360deg / var(--quantity)) * var(--index)))
-        translateZ(var(--translateZ));
+  position: absolute;
+  border: 3px solid rgba(255, 255, 255, 0.4);
+  border-radius: 12px;
+  overflow: hidden;
+  inset: 0;
+  transition: transform 0.5s;
+  background: linear-gradient(145deg, #34495e, #2c3e50);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+
+  transform: rotateY(calc((360deg / var(--quantity)) * var(--index)))
+    translateZ(var(--translateZ));
 }
 
 .card .img {
-    width: 100%;
-    height: 100%;
-    background-size: cover;
-    background-position: center;
-    border-radius: 1rem;
-    opacity: 0.9;
-    transition: opacity 0.3s;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  border-radius: 1rem;
+  opacity: 0.9;
+  transition: opacity 0.3s;
 }
 
 .card:hover .img {
-    opacity: 1;
+  opacity: 1;
 }
